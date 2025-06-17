@@ -13,10 +13,7 @@ function EmailList({ emailList, labels, onOpenMail , toggleStarred }) {
               .filter((email) =>
                 email.labels.includes(labels) 
               )
-
-
-
-
+  
               .map((email, index) => (
                 <EmailItem
                   key={index}

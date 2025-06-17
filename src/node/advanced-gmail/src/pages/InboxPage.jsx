@@ -15,7 +15,7 @@ function InboxPage() {
 
   const [emailList, setEmailList] = useState([
     { sender: "Mark Moss", subject: "...", date: "Jun 12", labels: ["All Mail","Inbox", "Starred" , "Snoozed"] },
-    { sender: "Jane Doe", subject: "...", date: "Jun 13", labels: ["All Mail","Inbox", "Starred"] },
+    { sender: "Jane Doe", subject: "...", date: "Jun 13", labels: ["All Mail","Inbox", "Starred","Snoozed"] },
     { sender: "Admin", subject: "...", date: "Jun 14", labels: ["All Mail","Inbox"] },
   ]);
 
