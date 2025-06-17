@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Choose-mail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/login.css">
+
+</head>
+
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+
+        <div class="login-container d-flex align-items-center justify-content-between">
+
+            <!-- left-->
+            <div class="left-section">
+                <img src="img/mail_logo.png" alt="Logo" class="logo mb-3">
+                <h2 class="mb-1">Choose your</h2>
+                <h2 class="mb-1">Mail address</h2>
+                <p class="text-muted">Create your own Mail address</p>
+
+
+            </div>
+
+            <!-- right-->
+            <div class="right-section">
+                <div class="mb-3">
+                    <input id="emailInput" type="text" class="form-control mt-2" placeholder="Create your own Mail address">
+                    <p class="text-muted mb-2">You can use letters, numbers and periods</p>
+                    <div class="invalid-feedback">
+                        <span class="me-1">❗</span>This email address is already taken
+                    </div>
+                </div>
+
+
+                <!-- buttons-->
+                <div class="d-flex justify-content-end">
+                    <button id="submitBtn" type="button" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="choose_mail.js"></script>
+
+</body>
+
+</html>

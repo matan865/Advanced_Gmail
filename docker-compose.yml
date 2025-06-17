@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./src/cpp
+      dockerfile: Dockerfile
+    ports:
+      - "5555:5555"
+    container_name: Gmail_server
+    volumes:
+      - ./data:/app/data
+    networks:
+      - appnet
+
+  client:
+    build:
+      context: ./src/node        
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    container_name: Gmail_client_node
+    depends_on:
+      - server
+    networks:
+      - appnet
+    tty: true
+
+networks:
+  appnet:

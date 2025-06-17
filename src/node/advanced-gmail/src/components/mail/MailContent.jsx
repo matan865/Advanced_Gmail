@@ -1,0 +1,55 @@
+import React from "react";
+import IconButton from "./IconButton";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
+function MailContent({sender, subject, date ,labels = [], onToggleStarred }) {
+  return (
+    <div className="container ms-auto" style={{ height: "600px", width: "1000px", overflowY: "auto" }}>
+      <div className="mail my-4">
+        <div className="d-flex align-items-center justify-content-between">
+          <h5 className="mb-0">
+            {subject}
+            <span className="badge bg-light text-dark border ms-2">{labels}</span>
+          </h5>
+          <div className="d-flex align-items-center gap-3 text-muted">
+            <small>{date}</small>
+            <IconButton icon={labels.includes("Starred") ? "bi-star-fill text-warning" : "bi-star"}
+              onClick={onToggleStarred } />
+            <i className="bi bi-reply"></i>
+          </div>
+        </div>
+
+        <div className="d-flex align-items-center mt-3">
+          <img src="https://via.placeholder.com/40" className="rounded-circle me-2" alt="profile" />
+          <div>
+            <strong>{sender}</strong>
+            <small className="text-muted ms-2">
+              &lt;{sender ? sender.toLowerCase().replace(" ", ".") : "unknown"}@mail.com&gt;
+            </small>
+
+            <div className="text-muted small">to me</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mail-content my-4">
+        <p className="text-muted">
+          This is the content of the email from {sender}.
+        </p>
+      </div>
+
+      <div className="ButtonsBelow d-flex gap-2">
+        <button type="button" className="btn btn-outline-secondary">
+          <i className="bi bi-reply me-2"></i> Reply
+        </button>
+        <button type="button" className="btn btn-outline-secondary">
+          <i className="bi bi-forward me-2"></i> Forward
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default MailContent;
