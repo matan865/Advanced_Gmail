@@ -4,7 +4,7 @@ import "../../styles/sidebar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function Sidebar({ isSidebarOpen, onSelectLabel, labelCounts }) {
+function Sidebar({ isSidebarOpen, onSelectLabel, labelCounts , onCompose }) {
   return (
     <div
       id="desktopSidebar"
@@ -12,7 +12,7 @@ function Sidebar({ isSidebarOpen, onSelectLabel, labelCounts }) {
 
       {/* Main list */}
       <ul className="list-group">
-        <IconButton icon="bi-pen" label="Compose" id="composeBtn" />
+        <IconButton icon="bi-pen" label="Compose" id="composeBtn" onClick={onCompose}/>
         <IconButton icon="bi-inbox" label="Inbox" badge={labelCounts["Inbox"] || 0} onClick={() => onSelectLabel("Inbox")} />
         <IconButton icon="bi-star" label="Starred" badge={labelCounts["Starred"] || 0} onClick={() => onSelectLabel("Starred")} />
         <IconButton icon="bi-alarm" label="Snoozed" badge={labelCounts["Snoozed"] || 0} onClick={() => onSelectLabel("Snoozed")} />

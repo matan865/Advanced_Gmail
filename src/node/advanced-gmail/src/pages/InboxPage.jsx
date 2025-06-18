@@ -4,6 +4,7 @@ import Sidebar from "../components/mail/Sidebar";
 import Toolbar from "../components/mail/Toolbar";
 import EmailList from "../components/mail/EmailList";
 import MailPage from "./MailPage";
+import ComposePage from "./ComposePage";
 import "../styles/inbox.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -12,11 +13,13 @@ function InboxPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedMail, setSelectedMail] = useState(null);
   const [selectedLabel, setSelectedLabel] = useState("All Mail");
+  const [isComposeOpen, setIsComposeOpen] = useState(false);
+
 
   const [emailList, setEmailList] = useState([
-    { sender: "Mark Moss", subject: "...", date: "Jun 12", labels: ["All Mail","Inbox", "Starred" , "Snoozed"] },
-    { sender: "Jane Doe", subject: "...", date: "Jun 13", labels: ["All Mail","Inbox", "Starred","Snoozed"] },
-    { sender: "Admin", subject: "...", date: "Jun 14", labels: ["All Mail","Inbox"] },
+    { sender: "Mark Moss", subject: "...", date: "Jun 12", labels: ["All Mail", "Inbox", "Starred", "Snoozed"] },
+    { sender: "Jane Doe", subject: "...", date: "Jun 13", labels: ["All Mail", "Inbox", "Starred", "Snoozed"] },
+    { sender: "Admin", subject: "...", date: "Jun 14", labels: ["All Mail", "Inbox"] },
   ]);
 
   const labelCounts = {};
@@ -31,7 +34,7 @@ function InboxPage() {
     });
   });
 
-  
+
 
   function toggleStarred(index) {
     console.log("toggleStarred called from mailContent");
@@ -69,15 +72,22 @@ function InboxPage() {
         <Sidebar isSidebarOpen={isSidebarOpen}
           onSelectLabel={setSelectedLabel}
           labelCounts={labelCounts}
-        />
+          onCompose={() => setIsComposeOpen(true)}
 
-        {!selectedMail ? (
+        />
+        {/* To send email */}
+        {isComposeOpen ? (
+          <ComposePage onClose={() => setIsComposeOpen(false)} />
+        ) :
+        // If no mail is selected, show the email list
+        !selectedMail ? (
           <EmailList onOpenMail={setSelectedMail}
             labels={selectedLabel}
             emailList={emailList}
             setEmailList={setEmailList}
             toggleStarred={toggleStarred}
           />) :
+        // If a mail is selected, show the mail content
           (<MailPage
             {...selectedMail}
             onBack={() => setSelectedMail(null)}
@@ -89,7 +99,7 @@ function InboxPage() {
               );
 
               setEmailList(updatedList);
-              setSelectedMail(updatedMail); 
+              setSelectedMail(updatedMail);
             }}
             toggleStarred={toggleStarred}
           />)}
