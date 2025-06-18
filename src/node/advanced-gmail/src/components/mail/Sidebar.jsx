@@ -16,9 +16,9 @@ function Sidebar({ isSidebarOpen, onSelectLabel, labelCounts , onCompose }) {
         <IconButton icon="bi-inbox" label="Inbox" badge={labelCounts["Inbox"] || 0} onClick={() => onSelectLabel("Inbox")} />
         <IconButton icon="bi-star" label="Starred" badge={labelCounts["Starred"] || 0} onClick={() => onSelectLabel("Starred")} />
         <IconButton icon="bi-alarm" label="Snoozed" badge={labelCounts["Snoozed"] || 0} onClick={() => onSelectLabel("Snoozed")} />
-        <IconButton icon="bi-exclamation-circle-fill" label="Important" badge={labelCounts["Important"] || 0} />
+        <IconButton icon="bi-exclamation-circle-fill" label="Important" badge={labelCounts["Important"] || 0} onClick={() => onSelectLabel("Important")}  />
         <IconButton icon="bi-send" label="Sent" badge={labelCounts["Sent"] || 0} onClick={() => onSelectLabel("Sent")} />
-        <IconButton icon="bi-file-earmark-text" label="Drafts" badge={labelCounts["Drafts"] || 0} />
+        <IconButton icon="bi-file-earmark-text" label="Drafts" badge={labelCounts["Drafts"] || 0} onClick={() => onSelectLabel("Drafts")}  />
       </ul>
 
       {/* Collapsible "More" section */}
