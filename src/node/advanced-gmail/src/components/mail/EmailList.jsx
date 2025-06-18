@@ -1,7 +1,7 @@
 import EmailItem from "./EmailItem";
 import InboxToolbar from "./InboxToolBar";
 
-function EmailList({ emailList, labels, onOpenMail , toggleStarred }) {
+function EmailList({ emailList, labels, onOpenMail , toggleStarred , searchQuery }) {
   return (
     <>
       <InboxToolbar />
@@ -10,9 +10,14 @@ function EmailList({ emailList, labels, onOpenMail , toggleStarred }) {
           <tbody>
             {emailList
 
-              .filter((email) =>
-                email.labels.includes(labels) 
+              .filter((email) =>(
+                email.labels.includes(labels) &&  
+              (
+                 (email.subject || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+                 (email.sender || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+                 (email.date || "").toLowerCase().includes(searchQuery.toLowerCase())
               )
+              ))
   
               .map((email, index) => (
                 <EmailItem
@@ -22,7 +27,6 @@ function EmailList({ emailList, labels, onOpenMail , toggleStarred }) {
                   onToggleStarred={() => toggleStarred(index)}
                 />
               ))}
-
 
           </tbody>
         </table>

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-function Toolbar({ isSidebarOpen, setIsSidebarOpen }) {
+function Toolbar({ isSidebarOpen, setIsSidebarOpen , onSearch  }) {
   const navigate = useNavigate();
   return (
     <div className="mainBar container-fluid text-center">
@@ -29,7 +29,7 @@ function Toolbar({ isSidebarOpen, setIsSidebarOpen }) {
         </div>
 
         <div className="col-5">
-          <input type="text" className="form-control" placeholder="Search mail" />
+          <input type="text" className="form-control" placeholder="Search mail" onChange={(e) => onSearch(e.target.value)}/>
         </div>
       </div>
     </div>
