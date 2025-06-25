@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../api";
-import "../../styles/login.css";
+import "../../styles/inputbox.css";
 
 function LoginForm() {
-  const [email, setEmail]       = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError]       = useState("");
-  const navigate                = useNavigate();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -29,21 +29,29 @@ function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="right-section">
-      <input
-        type="text"
-        placeholder="Email"
-        className={`form-control ${error ? "is-invalid" : ""}`}
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-      />
+      <div className="inputbox ">
+        <input
+          type="text"
+          placeholder="Enter your mail"
+          className={`form-control ${error ? "is-invalid" : ""}`}
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+        <i></i>
+      </div>
+      <div className="inputbox">
 
-      <input
-        type="password"
-        placeholder="Password"
-        className={`form-control mt-2 ${error ? "is-invalid" : ""}`}
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          className={`form-control mt-2 ${error ? "is-invalid" : ""}`}
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+        />
+        <i></i>
+      </div>
 
       {error && <div className="text-danger mt-2">❗ {error}</div>}
 

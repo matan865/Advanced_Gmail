@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { signup } from "../../api";
 import "../../styles/login.css";
 
+
 export default function SignUpForm() {
   const navigate = useNavigate();
 
