@@ -7,6 +7,7 @@ import ChooseMailPage from "./pages/ChooseMailPage";
 import PasswordPage from "./pages/PasswordPage";
 import InboxPage from "./pages/InboxPage";
 import MailPage from "./pages/MailPage";
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
@@ -16,7 +17,17 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/choose-mail" element={<ChooseMailPage />} />
         <Route path="/password" element={<PasswordPage />} />
-        <Route path="/inbox" element={<InboxPage />} />
+        <Route path="/inbox" element={
+          <PrivateRoute>
+          <InboxPage />
+          </PrivateRoute>
+          } />
+
+        <Route path="/mail/:id" element={
+            <PrivateRoute>
+              <MailPage />
+            </PrivateRoute>
+          } />
 
        
       </Routes>

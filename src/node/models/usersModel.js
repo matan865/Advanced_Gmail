@@ -56,7 +56,7 @@ exports.addMail = ({ from, to, subject, body }) => {
 
 exports.getLast50Mails = (userId) => {
   const user = users.find(u => u.id === userId);
-if (!user) return null;
+  if (!user) return null;
 
   const allMails = [...user.inbox, ...user.sent];
   return allMails.reverse().slice(0, 50);

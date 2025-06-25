@@ -1,4 +1,7 @@
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const usersModel = require('../models/usersModel');
+const SECRET = process.env.JWT_SECRET;
 
 exports.registerUser = (req, res) => {
   const { username, password, name, email, avatarUrl } = req.body;
@@ -12,7 +15,8 @@ exports.registerUser = (req, res) => {
   if (!newUser) {
     return res.status(409).json({ error: 'User already exists' });
   }
-   res.status(201).location(`/api/users/${newUser.id}`).send();
+  const token = jwt.sign( { userId: newUser.id }, SECRET, { expiresIn: '1h' });
+  return res.status(201).json({ token });
 };
 
 exports.getUser = (req, res) => {

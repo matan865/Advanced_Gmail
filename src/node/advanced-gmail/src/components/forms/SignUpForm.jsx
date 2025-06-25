@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../../api";
+import "../../styles/login.css";
 
-function SignUpForm() {
+export default function SignUpForm() {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -9,69 +11,75 @@ function SignUpForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState("");
-
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
 
   const validate = () => {
-    const newErrors = {};
-    if (!name.trim()) newErrors.name = "Enter your first name";
-    if (!birthday) newErrors.birthday = "Enter your birthday";
-    if (password.length < 8) newErrors.password = "Password must be at least 8 characters";
-    if (password !== confirmPassword) newErrors.confirmPassword = "Passwords do not match";
-    if (!gender) newErrors.gender = "Please select your gender";
-    return newErrors;
+    if (!name.trim()) return "Enter your first name";
+    if (!birthday) return "Enter your birthday";
+    if (password.length < 8) return "Password must be at least 8 characters";
+    if (password !== confirmPassword) return "Passwords do not match";
+    if (!gender) return "Please select your gender";
+    return null;
   };
 
-  const handleSubmit = () => {
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-    } else {
-      setErrors({});
-      navigate("/choose-mail");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    try {
+      const { token } = await signup({
+        username: name,
+        password,
+        displayName: name,
+        avatar: null,
+        birthday,
+        gender
+      });
+
+      localStorage.setItem("token", token);
+      navigate("/inbox");
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
-    <div className="right-section">
+    <form onSubmit={handleSubmit} className="right-section">
       <div className="mb-3">
         <input
           type="text"
           placeholder="First name"
-          className={`form-control mt-2 ${errors.name ? "is-invalid" : ""}`}
+          className={`form-control mt-2 ${error ? 'is-invalid' : ''}`}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        {errors.name && <div className="invalid-feedback">❗ {errors.name}</div>}
-
         <input
           type="date"
-          className={`form-control mt-2 ${errors.birthday ? "is-invalid" : ""}`}
+          className={`form-control mt-2 ${error ? 'is-invalid' : ''}`}
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
         />
-        {errors.birthday && <div className="invalid-feedback">❗ {errors.birthday}</div>}
-
         <input
           type="password"
           placeholder="Enter your password"
-          className={`form-control mt-2 ${errors.password ? "is-invalid" : ""}`}
+          className={`form-control mt-2 ${error ? 'is-invalid' : ''}`}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        {errors.password && <div className="invalid-feedback">❗ {errors.password}</div>}
-
         <input
           type="password"
           placeholder="Confirm password"
-          className={`form-control mt-2 ${errors.confirmPassword ? "is-invalid" : ""}`}
+          className={`form-control mt-2 ${error ? 'is-invalid' : ''}`}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        {errors.confirmPassword && <div className="invalid-feedback">❗ {errors.confirmPassword}</div>}
-
         <select
-          className={`form-select mt-2 ${errors.gender ? "is-invalid" : ""}`}
+          className={`form-select mt-2 ${error ? 'is-invalid' : ''}`}
           value={gender}
           onChange={(e) => setGender(e.target.value)}
         >
@@ -80,21 +88,19 @@ function SignUpForm() {
           <option value="female">Female</option>
           <option value="none">Rather not say</option>
         </select>
-        {errors.gender && <div className="invalid-feedback">❗ {errors.gender}</div>}
-
-        <div className="mb-3 mt-3">
-          <label className="form-label">Upload a profile picture</label>
-          <input className="form-control mt-2" type="file" accept="image/*" />
-        </div>
       </div>
 
+      {error && (
+        <div className="text-danger mb-2">
+          ❗ {error}
+        </div>
+      )}
+
       <div className="d-flex justify-content-end">
-        <button onClick={handleSubmit} className="btn btn-primary mt-2">
+        <button type="submit" className="btn btn-primary mt-2">
           Next
         </button>
       </div>
-    </div>
+    </form>
   );
 }
-
-export default SignUpForm;

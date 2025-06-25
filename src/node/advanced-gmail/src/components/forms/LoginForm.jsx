@@ -1,46 +1,61 @@
+
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { login } from "../../api";
+import "../../styles/login.css";
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [isInvalid, setIsInvalid] = useState(false);
-  const navigate = useNavigate();
+  const [email, setEmail]       = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError]       = useState("");
+  const navigate                = useNavigate();
 
-  const handleNext = () => {
-    if (!email.includes("@")) {
-      setIsInvalid(true);
-    } else {
-      setIsInvalid(false);
-      localStorage.setItem("userEmail", email);
-      navigate("/password");
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setError("");
+
+    if (email.trim() === "" || password.trim() === "") {
+      setError("Please enter a valid email and password");
+      return;
+    }
+    try {
+      const { token } = await login({ username: email, password });
+      localStorage.setItem("token", token);
+      navigate("/inbox");
+    } catch (err) {
+      setError(err.message);
     }
   };
 
-  const handleCreate = () => {
-    navigate("/signup");
-  };
-
   return (
-    <div className="right-section">
-      <div className="mb-3">
-        <input
-          type="text"
-          className={`form-control ${isInvalid ? "is-invalid" : ""}`}
-          placeholder="Email or phone"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <div className="invalid-feedback">
-          <span className="me-1">❗</span>Couldn't find your account
-        </div>
+    <form onSubmit={handleSubmit} className="right-section">
+      <input
+        type="text"
+        placeholder="Email"
+        className={`form-control ${error ? "is-invalid" : ""}`}
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        className={`form-control mt-2 ${error ? "is-invalid" : ""}`}
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+      />
+
+      {error && <div className="text-danger mt-2">❗ {error}</div>}
+
+      <div className="d-flex justify-content-between align-items-center mt-3">
+        <Link to="/signup" className="btn btn-outline-primary">
+          Create account
+        </Link>
+        <button type="submit" className="btn btn-primary">
+          Next
+        </button>
       </div>
-      <p><a href="#" className="link-primary text-decoration-none">Forgot email?</a></p>
-      <div className="d-flex justify-content-end gap-2">
-        <button onClick={handleCreate} className="btn btn-outline-primary">Create account</button>
-        <button onClick={handleNext} className="btn btn-primary">Next</button>
-      </div>
-    </div>
+    </form>
   );
 }
-
 export default LoginForm;

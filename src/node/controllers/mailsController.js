@@ -34,7 +34,7 @@ function isUrlSafe(url) {
 
 
 exports.sendMail = (req, res) => {
-  const senderId = req.header('user-id');
+  const senderId =  req.userId;
   const { to, subject, body } = req.body;
 
   if (!senderId || !to || !subject || !body) {
@@ -60,15 +60,16 @@ exports.sendMail = (req, res) => {
 };
 
 exports.getInbox = (req, res) => {
-const mails = usersModel.getLast50Mails(userId);
+  const userId =  req.userId;
+  const mails = usersModel.getLast50Mails(userId);
   if (!mails) {
     return res.status(404).json({ error: 'User not found' });
   }
-return res.status(200).json(mails);
+  return res.status(200).json(mails);
 };
 
 exports.getMail = (req, res) => {
-  const userId = req.header('user-id');
+  const userId =  req.userId;
   const mailId = req.params.id;
   if (!userId || !mailId) {
     return res.status(400).json({ error: 'Missing parameters' }); // Bad Request
@@ -78,7 +79,7 @@ exports.getMail = (req, res) => {
 };
 
 exports.updateMail = (req, res) => {
-  const userId = req.header('user-id');
+  const userId =  req.userId;
   const mailId = req.params.id;
   const { subject, body } = req.body;
   if (!userId || !mailId) {
@@ -89,7 +90,7 @@ exports.updateMail = (req, res) => {
 };
 
 exports.deleteMail = (req, res) => {
-  const userId = req.header('user-id');
+  const userId =  req.userId;
   const mailId = req.params.id;
   if (!userId || !mailId) {
     return res.status(400).json({ error: 'Missing parameters' });
@@ -99,7 +100,7 @@ exports.deleteMail = (req, res) => {
 };
 
 exports.searchMails = (req, res) => {
-  const userId = req.header('user-id');
+  const userId =  req.userId;
   const query = req.params.query;
 
   if (!userId || !query) {
