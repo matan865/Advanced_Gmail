@@ -1,5 +1,5 @@
 # Ignore any build artifacts
-**/build/
+#**/build/
 **/CMakeFiles/
 **/CMakeCache.txt
 **/Makefile
