@@ -1,2 +1,2 @@
-http://exe.com/bad
-www.exe.com/bad
+http://malicious-site.com
+http://malicious-site123.com

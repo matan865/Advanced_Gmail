@@ -1,7 +1,7 @@
 const net = require('net');
 const usersModel = require('../models/usersModel');
 
-const HOST = 'localhost';
+const HOST = 'server';
 const PORT = 5555; 
 
 function extractUrls(text) {
