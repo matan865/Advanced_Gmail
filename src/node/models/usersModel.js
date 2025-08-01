@@ -30,13 +30,27 @@ exports.getUserById = (id) => {
   return safeUser;
 };
 
+exports.getAllUsers = () => {
+  return users.map(user => {
+    const { password, ...safeUser } = user;
+    return safeUser;
+  });
+};
+
 exports.findUser = (username, password) => {
-  return users.find(u => u.username === username && u.password === password);
+  return users.find(u => 
+    (u.username === username || u.email === username) && u.password === password
+  );
 };
 
 exports.addMail = ({ from, to, subject, body }) => {
+  console.log('addMail called with:', { from, to, subject, body });
   const sender = users.find(u => u.id === from);
-  const receiver = users.find(u => u.id === to);
+  const receiver = users.find(u => u.id === to || u.username === to);
+  
+  console.log('Sender found:', sender);
+  console.log('Receiver found:', receiver);
+  console.log('All users:', users.map(u => ({ id: u.id, username: u.username })));
 
   if (!sender || !receiver) return null;
 
@@ -59,7 +73,20 @@ exports.getLast50Mails = (userId) => {
   if (!user) return null;
 
   const allMails = [...user.inbox, ...user.sent];
-  return allMails.reverse().slice(0, 50);
+  
+  // Convert UUIDs to usernames
+  const mailsWithUsernames = allMails.map(mail => {
+    const fromUser = users.find(u => u.id === mail.from);
+    const toUser = users.find(u => u.id === mail.to);
+    
+    return {
+      ...mail,
+      from: fromUser ? fromUser.username : mail.from,
+      to: toUser ? toUser.username : mail.to
+    };
+  });
+  
+  return mailsWithUsernames.reverse().slice(0, 50);
 };
 
 exports.getMailById = (userId, mailId) => {

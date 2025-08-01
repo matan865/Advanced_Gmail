@@ -16,8 +16,9 @@ export default function ChooseMailForm() {
       return;
     }
 
+    // Save email to localStorage and navigate to signup completion
     localStorage.setItem("userEmail", email);
-    navigate("/inbox");
+    navigate("/signup-complete"); //  complete signup with chosen email
   };
 
   return (

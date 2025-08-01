@@ -27,3 +27,8 @@ exports.getUser = (req, res) => {
   }
    res.status(200).json(user);
 };
+
+exports.getAllUsers = (req, res) => {
+  const users = usersModel.getAllUsers();
+  res.status(200).json(users);
+};

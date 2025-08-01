@@ -15,7 +15,7 @@ function MailContent({sender, subject, date ,labels = [], onToggleStarred }) {
           </h5>
           <div className="d-flex align-items-center gap-3 text-muted">
             <small>{date}</small>
-            <IconButton icon={labels.includes("Starred") ? "bi-star-fill text-warning" : "bi-star"}
+            <IconButton icon={(labels || []).includes("Starred") ? "bi-star-fill text-warning" : "bi-star"}
               onClick={onToggleStarred } />
             <i className="bi bi-reply"></i>
           </div>

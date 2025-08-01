@@ -8,7 +8,7 @@ function MailToolBar({ onBack, labels, updateMail }) {
   const toggleLabel = (labelName) => {
     if (!labels) return;
 
-    const updatedLabels = labels.includes(labelName)
+    const updatedLabels = (labels || []).includes(labelName)
       ? labels.filter((l) => l !== labelName)
       : [...labels, labelName];
 
@@ -18,7 +18,7 @@ function MailToolBar({ onBack, labels, updateMail }) {
   function removeInbox({ SpecialLabels}) {
     if (!labels) return;
     const newLabels = [...labels];
-    if (!newLabels.includes(SpecialLabels)) {
+    if (!(newLabels || []).includes(SpecialLabels)) {
       newLabels.push(SpecialLabels);
     }
     const inboxIndex = newLabels.indexOf("Inbox");

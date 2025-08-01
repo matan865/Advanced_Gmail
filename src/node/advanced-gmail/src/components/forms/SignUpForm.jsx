@@ -20,6 +20,10 @@ export default function SignUpForm() {
     if (password.length < 8) return "Password must be at least 8 characters";
     if (password !== confirmPassword) return "Passwords do not match";
     if (!gender) return "Please select your gender";
+    
+    const userEmail = localStorage.getItem("userEmail");
+    if (!userEmail) return "Email not selected.";
+    
     return null;
   };
 
@@ -33,16 +37,19 @@ export default function SignUpForm() {
     }
 
     try {
+      const userEmail = localStorage.getItem("userEmail"); // Get email from ChooseMailPage
       const { token } = await signup({
         username: name,
         password,
         displayName: name,
         avatar: null,
         birthday,
-        gender
+        gender,
+        email: userEmail 
       });
 
       localStorage.setItem("token", token);
+      localStorage.removeItem("userEmail"); // Clean up
       navigate("/inbox");
     } catch (err) {
       setError(err.message);

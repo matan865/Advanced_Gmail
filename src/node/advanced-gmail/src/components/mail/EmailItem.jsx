@@ -1,15 +1,15 @@
 import React from "react";
 
-function EmailItem({ sender, subject, date, labels, onOpen, onToggleStarred }) {
+function EmailItem({ from, to, subject, body, onOpen, onToggleStarred }) {
   return (
     <tr className="email-item" role="button" onClick={onOpen}>
       <td><input type="checkbox" onClick={(e) => e.stopPropagation()} /></td>
-      <td onClick={(e) => { e.stopPropagation(); onToggleStarred(); }}>
-        <i className={`bi ${labels.includes("Starred") ? "bi-star-fill text-warning" : "bi-star"}`}></i>
+      <td onClick={(e) => { e.stopPropagation(); onToggleStarred && onToggleStarred(); }}>
+        <i className="bi bi-star"></i>
       </td>
-      <td><strong>{sender}</strong></td>
-      <td>{subject}</td>
-      <td><small className="text-muted">{date}</small></td>
+      <td><strong>{from || "Unknown"}</strong></td>
+      <td>{subject || "No Subject"}</td>
+      <td><small className="text-muted">{new Date().toLocaleDateString()}</small></td>
     </tr>
   );
 }

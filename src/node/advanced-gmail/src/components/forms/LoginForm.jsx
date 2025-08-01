@@ -19,8 +19,9 @@ function LoginForm() {
       return;
     }
     try {
-      const { token } = await login({ username: email, password });
+      const { token, userId } = await login({ username: email, password });
       localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
       navigate("/inbox");
     } catch (err) {
       setError(err.message);

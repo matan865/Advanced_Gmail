@@ -1,7 +1,7 @@
 import EmailItem from "./EmailItem";
 import InboxToolbar from "./InboxToolBar";
 
-function EmailList({ emailList, labels, onOpenMail , toggleStarred , searchQuery }) {
+function EmailList({ emailList = [], labels, onOpenMail , toggleStarred , searchQuery }) {
   return (
     <>
       <InboxToolbar />
@@ -9,25 +9,25 @@ function EmailList({ emailList, labels, onOpenMail , toggleStarred , searchQuery
         <table className="table table-hover align-middle">
           <tbody>
             {emailList
-
-              .filter((email) =>(
-                email.labels.includes(labels) &&  
-              (
-                 (email.subject || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
-                 (email.sender || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
-                 (email.date || "").toLowerCase().includes(searchQuery.toLowerCase())
-              )
-              ))
-  
+              .filter((email) => {
+                // If no search query, show all emails
+                if (!searchQuery) return true;
+                
+                // Search in subject and body
+                const lowerQuery = searchQuery.toLowerCase();
+                return (
+                  (email.subject || "").toLowerCase().includes(lowerQuery) ||
+                  (email.body || "").toLowerCase().includes(lowerQuery)
+                );
+              })
               .map((email, index) => (
                 <EmailItem
-                  key={index}
+                  key={email.id || index}
                   {...email}
                   onOpen={() => onOpenMail(email)}
-                  onToggleStarred={() => toggleStarred(index)}
+                  onToggleStarred={() => toggleStarred && toggleStarred(index)}
                 />
               ))}
-
           </tbody>
         </table>
       </div>
