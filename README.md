@@ -28,10 +28,7 @@ docker-compose up -d server && docker-compose up -d client
 ```
 
 This also initializes the Bloom Filter with:
-
-```bash
 CMD ["./runProgram", "5555", "8", "1", "2"]
-```
 
 ---
 
@@ -60,6 +57,9 @@ CMD ["./runProgram", "5555", "8", "1", "2"]
 ---
 
 ## 💬 Example Scenario – Superman and Spiderman
+📌 Important: Replace <SUPERMAN_ID>, <SPIDERMAN_ID>, and <MAIL_ID> with the actual UUIDs returned by the API.
+Please avoid extra (or unnecessary) spaces
+Please find attached examples
 
 ### Step 1 – Create Users:
 
@@ -73,6 +73,8 @@ curl -i -X POST http://localhost:3000/api/users \
   -H "Content-Type: application/json" \
   -d '{"username": "spiderman", "password": "1234", "name": "Peter Parker", "email": "spidey@dailybugle.com", "avatarUrl": ""}'
 ```
+### How to find <SUPERMAN_ID>, <SPIDERMAN_ID>
+![Example UUID](./screenshots/Example1.png)
 
 ### Step 2 – Send Mail (from Superman to Spiderman):
 
@@ -80,7 +82,7 @@ curl -i -X POST http://localhost:3000/api/users \
 curl -i -X POST http://localhost:3000/api/mails \
   -H "Content-Type: application/json" \
   -H "user-id: <SUPERMAN_UUID>" \
-  -d '{"to": "spiderman", "subject": "Meeting", "body": "Let’s meet on the rooftop."}'
+  -d '{"to": "<SPIDERMAN_UUID>", "subject": "Meeting", "body": "Let’s meet on the rooftop."}'
 ```
 
 ### Step 3 – Check Spiderman's Inbox:
@@ -89,6 +91,8 @@ curl -i -X POST http://localhost:3000/api/mails \
 curl -i http://localhost:3000/api/mails \
   -H "user-id: <SPIDERMAN_UUID>"
 ```
+### How to find <MAIL_ID>
+![Example <MAIL_ID>](./screenshots/Example2.png)
 
 ### Step 4 – Update the Mail:
 
@@ -105,7 +109,6 @@ curl -i -X PATCH http://localhost:3000/api/mails/<MAIL_ID> \
 curl -i -X DELETE http://localhost:3000/api/mails/<MAIL_ID> \
   -H "user-id: <SPIDERMAN_UUID>"
 ```
-📌 Important: Replace <SUPERMAN_ID>, <SPIDERMAN_ID>, and <MAIL_ID> with the actual UUIDs returned by the API.
 
 ### 🔐 Authentication Note
 
