@@ -1,4 +1,4 @@
-# Stage 1: Build the React client app
+# 1: Build the React client app
 FROM node:20 AS build
 WORKDIR /app/advanced-gmail
 
@@ -12,7 +12,7 @@ COPY advanced-gmail/. .
 # Build the client app for production
 RUN npm run build
 
-# Stage 2: Setup the Node.js server
+# 2: Setup the Node.js server
 FROM node:20
 WORKDIR /app
 

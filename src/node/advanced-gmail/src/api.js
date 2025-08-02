@@ -1,79 +1,218 @@
-const BASE = "/api";
+const BASE_URL = '/api';
 
-export async function signup({ username, password, displayName, avatar, birthday, gender, email }) {
-  const res = await fetch(`${BASE}/users`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ 
-      username, 
-      password, 
-      name: displayName, 
-      email: email, 
-      avatarUrl: avatar || ""
+
+async function apiRequest(endpoint, options = {}) {
+  try {
+    const url = `${BASE_URL}${endpoint}`;
+    
+    const defaultOptions = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    
+    // Add auth token if available
+    const token = localStorage.getItem('token');
+    if (token) {
+      defaultOptions.headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    const finalOptions = { ...defaultOptions, ...options };
+    
+    // Merge headers properly
+    if (options.headers) {
+      finalOptions.headers = { ...defaultOptions.headers, ...options.headers };
+    }
+    
+    const response = await fetch(url, finalOptions);
+    
+    if (!response.ok) {
+      if (response.status === 401) {
+        // Token expired, redirect to login
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        window.location.href = '/login';
+        return;
+      }
+      throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
+    }
+    
+    return await response.json();
+    
+  } catch (error) {
+    console.error('API Request Error:', error);
+    throw error;
+  }
+}
+
+// ============================================================================
+//  Authentication Functions
+// ============================================================================
+
+
+ // Login user
+ 
+export const login = async (credentials) => {
+  const response = await apiRequest('/tokens', {
+    method: 'POST',
+    body: JSON.stringify({
+      email: credentials.username, // Frontend sends username, backend expects email
+      password: credentials.password
     })
   });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) {
-    throw new Error(data.error || "Signup failed");
-  }
-  return data;
-}
+  
+  return {
+    token: response.token,
+    userId: response.user?.id || response.userId
+  };
+};
 
-export async function login({ username, password }) {
-  const res = await fetch(`${BASE}/tokens`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
+
+ // Signup user
+
+export const signup = async (userData) => {
+  return apiRequest('/users', {
+    method: 'POST',
+    body: JSON.stringify({
+      name: userData.displayName || userData.username,
+      email: userData.email,
+      password: userData.password,
+      // Additional fields if needed
+      birthday: userData.birthday,
+      gender: userData.gender,
+      avatar: userData.avatar
+    })
   });
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.error || "Login failed");
-  }
-  localStorage.setItem("userId", data.userId); // Save userId
-  return data; 
-}
+};
 
-export async function fetchMails() {
-  const userId = localStorage.getItem("userId");
-  if (!userId) throw new Error("User not logged in");
+// ============================================================================
+//  Mail Functions
+// ============================================================================
 
-  const res = await fetch(`${BASE}/mails`, {
-    headers: { 
-      "user-id": userId,
-      "Content-Type": "application/json"
-    },
+
+ // Fetch all mails (inbox)
+
+export const fetchMails = async () => {
+  return apiRequest('/mails');
+};
+
+
+ // Send new mail
+ 
+export const sendMail = async (mailData) => {
+  return apiRequest('/mails', {
+    method: 'POST',
+    body: JSON.stringify(mailData)
   });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || "Failed to load mails");
-  }
-  return res.json();
-}
+};
 
-export async function sendMail({ to, subject, body }) {
-  const userId = localStorage.getItem("userId");
-  if (!userId) throw new Error("User not logged in");
 
-  const res = await fetch(`${BASE}/mails`, {
-    method: "POST",
-    headers: { 
-      "user-id": userId,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ to, subject, body }),
+ // Get specific mail by ID
+
+export const getMailById = async (mailId) => {
+  return apiRequest(`/mails/${mailId}`);
+};
+
+
+ // Search mails
+
+export const searchMails = async (query) => {
+  return apiRequest(`/mails/search/${encodeURIComponent(query)}`);
+};
+
+
+ // Update mail (mark as read, important, etc.)
+
+export const updateMail = async (mailId, updateData) => {
+  return apiRequest(`/mails/${mailId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(updateData)
   });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || "Failed to send mail");
-  }
-  return res.json();
-}
+};
 
-export async function fetchUsers() {
-  const res = await fetch(`${BASE}/users`);
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || "Failed to load users");
-  }
-  return res.json();
-}
+
+// Delete mail
+ 
+export const deleteMail = async (mailId) => {
+  return apiRequest(`/mails/${mailId}`, {
+    method: 'DELETE'
+  });
+};
+
+// ============================================================================
+//  Label Functions
+// ============================================================================
+
+
+ // Get all labels
+
+export const getLabels = async () => {
+  return apiRequest('/labels');
+};
+
+
+ // Create new label
+ 
+export const createLabel = async (labelData) => {
+  return apiRequest('/labels', {
+    method: 'POST',
+    body: JSON.stringify(labelData)
+  });
+};
+
+
+// Update label
+
+export const updateLabel = async (labelId, updateData) => {
+  return apiRequest(`/labels/${labelId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(updateData)
+  });
+};
+
+
+ // Delete label
+ 
+export const deleteLabel = async (labelId) => {
+  return apiRequest(`/labels/${labelId}`, {
+    method: 'DELETE'
+  });
+};
+
+// ============================================================================
+//  Blacklist Functions
+// ============================================================================
+
+
+ // Add email to blacklist
+ 
+export const addToBlacklist = async (blacklistData) => {
+  return apiRequest('/blacklist', {
+    method: 'POST',
+    body: JSON.stringify(blacklistData)
+  });
+};
+
+
+ // Remove email from blacklist
+ 
+export const removeFromBlacklist = async (blacklistId) => {
+  return apiRequest(`/blacklist/${blacklistId}`, {
+    method: 'DELETE'
+  });
+};
+
+// ============================================================================
+// User Functions
+// ============================================================================
+
+// Get all users
+export const getUsers = async () => {
+  return apiRequest('/users');
+};
+
+ // Get user by ID
+
+export const getUserById = async (userId) => {
+  return apiRequest(`/users/${userId}`);
+};

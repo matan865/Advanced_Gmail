@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../api";
 import "../../styles/login.css";
+import "../../pages/ChooseMailPage.css";
 
 
 export default function SignUpForm() {
@@ -104,7 +105,7 @@ export default function SignUpForm() {
       )}
 
       <div className="d-flex justify-content-end">
-        <button type="submit" className="btn btn-primary mt-2">
+        <button type="submit" className="btn btn-primary mt-2" onClick={() => navigate("/pages/ChooseMailPage.css")}>
           Next
         </button>
       </div>

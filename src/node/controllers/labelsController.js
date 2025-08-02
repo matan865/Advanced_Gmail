@@ -2,7 +2,7 @@ const labelsModel = require('../models/labelsModel');
 const usersModel = require('../models/usersModel');
 
 function validateUser(req, res) {
-  const userId = req.header('user-id');
+  const userId = req.userId; // From auth middleware
   if (!userId) {
     res.status(400).json({ error: 'Missing user-id header' });
     return null;
