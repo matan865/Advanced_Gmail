@@ -16,7 +16,12 @@ exports.registerUser = (req, res) => {
     return res.status(409).json({ error: 'User already exists' });
   }
   const token = jwt.sign( { userId: newUser.id }, SECRET, { expiresIn: '1h' });
-  return res.status(201).json({ token });
+  return res.status(201).location(`/api/users/${newUser.id}`).send();
+};
+
+exports.getAllUsers = (req, res) => {
+  const users = usersModel.getAllUsers();
+  res.status(200).json(users);
 };
 
 exports.getUser = (req, res) => {
@@ -26,9 +31,4 @@ exports.getUser = (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
    res.status(200).json(user);
-};
-
-exports.getAllUsers = (req, res) => {
-  const users = usersModel.getAllUsers();
-  res.status(200).json(users);
 };

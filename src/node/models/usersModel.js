@@ -30,17 +30,15 @@ exports.getUserById = (id) => {
   return safeUser;
 };
 
-exports.getAllUsers = () => {
-  return users.map(user => {
-    const { password, ...safeUser } = user;
-    return safeUser;
-  });
+exports.findUser = (username, password) => {
+  return users.find(u => u.username === username && u.password === password);
 };
 
-exports.findUser = (username, password) => {
-  return users.find(u => 
-    (u.username === username || u.email === username) && u.password === password
-  );
+exports.getAllUsers = () => {
+  return users.map(u => {
+    const { password, ...safeUser } = u;
+    return safeUser;
+  });
 };
 
 exports.addMail = ({ from, to, subject, body }) => {

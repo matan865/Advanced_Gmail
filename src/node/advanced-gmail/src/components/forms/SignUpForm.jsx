@@ -38,19 +38,18 @@ export default function SignUpForm() {
 
     try {
       const userEmail = localStorage.getItem("userEmail"); // Get email from ChooseMailPage
-      const { token } = await signup({
+      await signup({
         username: name,
         password,
         displayName: name,
         avatar: null,
         birthday,
         gender,
-        email: userEmail 
+        email: userEmail,
       });
 
-      localStorage.setItem("token", token);
       localStorage.removeItem("userEmail"); // Clean up
-      navigate("/inbox");
+      navigate("/login");
     } catch (err) {
       setError(err.message);
     }

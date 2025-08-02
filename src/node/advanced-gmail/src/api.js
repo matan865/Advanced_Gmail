@@ -23,19 +23,23 @@ export async function login({ username, password }) {
   const res = await fetch(`${BASE}/tokens`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ identifier: username, password }),
+    body: JSON.stringify({ username, password }),
   });
   const data = await res.json();
   if (!res.ok) {
     throw new Error(data.error || "Login failed");
   }
+  localStorage.setItem("userId", data.userId); // Save userId
   return data; 
 }
 
-export async function fetchMails(token) {
+export async function fetchMails() {
+  const userId = localStorage.getItem("userId");
+  if (!userId) throw new Error("User not logged in");
+
   const res = await fetch(`${BASE}/mails`, {
     headers: { 
-      "Authorization": `Bearer ${token}`,
+      "user-id": userId,
       "Content-Type": "application/json"
     },
   });
@@ -46,11 +50,14 @@ export async function fetchMails(token) {
   return res.json();
 }
 
-export async function sendMail(token, { to, subject, body }) {
+export async function sendMail({ to, subject, body }) {
+  const userId = localStorage.getItem("userId");
+  if (!userId) throw new Error("User not logged in");
+
   const res = await fetch(`${BASE}/mails`, {
     method: "POST",
     headers: { 
-      "Authorization": `Bearer ${token}`,
+      "user-id": userId,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ to, subject, body }),

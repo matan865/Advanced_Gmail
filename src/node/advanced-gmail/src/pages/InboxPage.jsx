@@ -18,8 +18,7 @@ export default function InboxPage() {
   useEffect(() => {
     async function load() {
       try {
-        const token = localStorage.getItem("token");
-        const mails = await fetchMails(token);
+        const mails = await fetchMails();
         setEmailList(mails);
       } catch (err) {
         console.error(err);
