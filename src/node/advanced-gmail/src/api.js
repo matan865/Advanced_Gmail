@@ -74,13 +74,11 @@ export const signup = async (userData) => {
   return apiRequest('/users', {
     method: 'POST',
     body: JSON.stringify({
-      name: userData.displayName || userData.username,
-      email: userData.email,
+      username: userData.username,
       password: userData.password,
-      // Additional fields if needed
-      birthday: userData.birthday,
-      gender: userData.gender,
-      avatar: userData.avatar
+      name: userData.displayName || userData.username,
+      avatarUrl: userData.avatarUrl
+      // backend will compute email from username and ignore gender/birthday for now
     })
   });
 };

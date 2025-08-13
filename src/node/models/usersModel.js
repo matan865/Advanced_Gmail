@@ -1,44 +1,72 @@
 const { v4: uuidv4 } = require('uuid');
 
+// In-memory users store
 const users = [];
 
-exports.addUser = ({ username, password, name, email, avatarUrl }) => {
-  if (users.find(u => u.username === username)) {
-    return null;
+function generateUniqueUsername(base) {
+  const cleanBase = String(base || '').trim();
+  if (!cleanBase) return null;
+  let candidate = cleanBase;
+  let i = 1;
+  while (users.some(u => u.username === candidate)) {
+    candidate = `${cleanBase}${i}`;
+    i += 1;
   }
+  return candidate;
+}
+
+exports.addUser = ({ username, password, name, email, avatarUrl }) => {
+  // Ensure required fields
+  if (!username || !password) return null;
+
+  // Ensure uniqueness (generate unique if taken)
+  const uniqueUsername = generateUniqueUsername(username);
+  if (!uniqueUsername) return null;
+
+  // Compute email from username (override provided)
+  const computedEmail = `${uniqueUsername}@mail.com`;
+
+  // Avatar defaults to one of our static avatars
+  const finalAvatarUrl = avatarUrl || '/avatars/avatar1.png';
 
   const user = {
     id: uuidv4(),
-    username,
+    username: uniqueUsername,
     password,
-    name,
-    email,
-    avatarUrl,
+    name: name || uniqueUsername,
+    email: computedEmail,
+    avatarUrl: finalAvatarUrl,
     inbox: [],
     sent: []
   };
 
   users.push(user);
-  return user;
+  // Return user without password
+  const { password: _pw, ...safeUser } = user;
+  return safeUser;
 };
+
+exports.getAllUsers = () => users.map(({ password, ...u }) => u);
 
 exports.getUserById = (id) => {
   const user = users.find(u => u.id === id);
   if (!user) return null;
-
   const { password, ...safeUser } = user;
   return safeUser;
 };
 
-exports.findUser = (username, password) => {
-  return users.find(u => u.username === username && u.password === password);
-};
+// Find user by username or email and verify password
+exports.findUser = (identifier, password) => {
+  const key = String(identifier || '').trim();
+  const pw = String(password || '');
+  if (!key || !pw) return null;
 
-exports.getAllUsers = () => {
-  return users.map(u => {
-    const { password, ...safeUser } = u;
-    return safeUser;
-  });
+  const user = users.find(u => u.username === key || u.email === key);
+  if (!user) return null;
+  if (user.password !== pw) return null;
+
+  const { password: _pw, ...safeUser } = user;
+  return safeUser;
 };
 
 exports.addMail = ({ from, to, subject, body }) => {

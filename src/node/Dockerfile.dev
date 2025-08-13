@@ -1,0 +1,39 @@
+# Dev image for running BOTH the server (Node) and the client (React) with hot reload
+FROM node:20
+
+# 1) Setup
+WORKDIR /app
+ENV NODE_ENV=development
+# Helpful for file watching inside Docker on some hosts
+ENV CHOKIDAR_USEPOLLING=true
+# Ensure dev servers bind to all interfaces
+ENV HOST=0.0.0.0
+# React dev server port (to avoid clashing with your Node server on 3000)
+ENV CLIENT_PORT=3001
+
+# 2) Install global dev helpers
+RUN npm i -g nodemon concurrently
+
+# 3) Install server deps (cache-friendly)
+COPY package*.json ./
+RUN npm install
+
+# 4) Install client deps (cache-friendly)
+WORKDIR /app/advanced-gmail
+COPY advanced-gmail/package*.json ./
+RUN npm install
+
+# 5) Copy source (server + client)
+WORKDIR /app
+COPY . .
+
+# 6) Expose both ports
+# Server runs on 3000, React dev server on CLIENT_PORT (default 3001)
+EXPOSE 3000 3001
+
+# 7) Start both processes:
+# - server: nodemon reloads on changes
+# - client: React dev server on $CLIENT_PORT
+CMD ["bash", "-lc", "concurrently -k -n server,client -c auto \
+  \"nodemon --watch . server.js\" \
+  \"cd advanced-gmail && PORT=$CLIENT_PORT npm start\""]

@@ -33,7 +33,7 @@ function LoginForm() {
       <div className="inputbox ">
         <input
           type="text"
-          placeholder="Enter your mail"
+          placeholder="Enter your email"
           className={`form-control ${error ? "is-invalid" : ""}`}
           value={email}
           onChange={e => setEmail(e.target.value)}

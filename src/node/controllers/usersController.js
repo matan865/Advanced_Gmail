@@ -15,8 +15,8 @@ exports.registerUser = (req, res) => {
   if (!newUser) {
     return res.status(409).json({ error: 'User already exists' });
   }
-  const token = jwt.sign( { userId: newUser.id }, SECRET, { expiresIn: '1h' });
-  return res.status(201).location(`/api/users/${newUser.id}`).send();
+  // For signup we return the created user (without password)
+  return res.status(201).json(newUser);
 };
 
 exports.getAllUsers = (req, res) => {

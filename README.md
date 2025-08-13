@@ -1,5 +1,15 @@
 # Advanced Gmail
 
+Production
+```bash
+docker-compose -f docker-compose.prod.yml up -d --build
+```
+Development
+```bash
+docker-compose -f docker-compose.prod.yml -f docker-compose.dev.yml up -d --build
+```
+
+
 In this project, we create a Gmail-like website and email simulation system to learn various tools taught in the *Advanced Systems Programming* course.
 
 ---

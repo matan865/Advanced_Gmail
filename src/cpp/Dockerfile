@@ -6,8 +6,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN mkdir data
-RUN mkdir build
+RUN mkdir -p data build
 
 WORKDIR /app/build
 RUN cmake .. && make runProgram

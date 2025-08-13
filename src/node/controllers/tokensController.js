@@ -4,8 +4,8 @@ const SECRET = process.env.JWT_SECRET;
 const usersModel = require("../models/usersModel");
 
 exports.login = (req, res) => {
-  const { username, identifier, password } = req.body;
-  const usernameOrEmail = username || identifier;
+  const { username, identifier, email, password } = req.body;
+  const usernameOrEmail = username || identifier || email;
   if (!usernameOrEmail || !password) {
     return res.status(400).json({ error: "Missing username or password" });
   }

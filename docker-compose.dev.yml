@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./src/cpp
+      dockerfile: Dockerfile
+    volumes:
+  
+    environment:
+      - NODE_ENV=development
+
+  client:
+    build:
+      context: ./src/node
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./src/node:/app
+      - /app/node_modules
+      - /app/advanced-gmail/node_modules
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+      - "3001:3001"
