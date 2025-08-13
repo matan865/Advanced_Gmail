@@ -8,6 +8,14 @@ import { useNavigate } from "react-router-dom";
 
 function Toolbar({ isSidebarOpen, setIsSidebarOpen , onSearch  }) {
   const navigate = useNavigate();
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+    } finally {
+      navigate("/login");
+    }
+  };
   return (
     <div className="mainBar container-fluid text-center">
       <div className="row">
@@ -30,6 +38,13 @@ function Toolbar({ isSidebarOpen, setIsSidebarOpen , onSearch  }) {
 
         <div className="col-5">
           <input type="text" className="form-control" placeholder="Search mail" onChange={(e) => onSearch(e.target.value)}/>
+        </div>
+
+        <div className="col-4 d-flex justify-content-end align-items-center">
+          <button className="btn btn-outline-danger" onClick={handleLogout}>
+            <i className="bi bi-box-arrow-right me-1"></i>
+            Logout
+          </button>
         </div>
       </div>
     </div>
