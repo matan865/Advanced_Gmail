@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "http-proxy-middleware": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "uuid": "^11.1.0"
   }

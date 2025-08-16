@@ -7,8 +7,12 @@
 **/CTestTestfile.cmake
 **/progress.marks
 **/src/node/node_modules/
+**/node_modules/
 
- 
+# Logs
+**/src/node/logs/
+**/logs/
+
 # Executables
 *.exe
 *.out

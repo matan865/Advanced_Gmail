@@ -3,6 +3,8 @@ const router = express.Router();
 const auth = require('../controllers/authMiddleware');
 const mailsController = require('../controllers/mailsController');
 
+
+
 router.post('/', auth, mailsController.sendMail);
 router.get('/', auth, mailsController.getInbox);
 router.get('/search/:query', auth, mailsController.searchMails);

@@ -51,7 +51,7 @@ exports.sendMail = (req, res) => {
       if (!mail) {
         return res.status(404).json({ error: 'Sender or recipient not found' });// Not Found
       }
-      res.status(201).location(`/api/mails/${mail.id}`).send(); // Created
+      res.status(201).location(`/api/mails/${mail.id}`).json({ok:"ok "}); // Created
     })
     .catch(err => {
       console.error('Link validation failed:', err.message);

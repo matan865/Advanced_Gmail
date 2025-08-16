@@ -6,6 +6,8 @@ services:
       context: ./src/cpp
       dockerfile: Dockerfile
     volumes:
+      # - ./src/cpp:/app
+      # - /app/node_modules
   
     environment:
       - NODE_ENV=development

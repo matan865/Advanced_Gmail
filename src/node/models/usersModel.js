@@ -72,7 +72,7 @@ exports.findUser = (identifier, password) => {
 exports.addMail = ({ from, to, subject, body }) => {
   console.log('addMail called with:', { from, to, subject, body });
   const sender = users.find(u => u.id === from);
-  const receiver = users.find(u => u.id === to || u.username === to);
+  const receiver = users.find(u => u.id === to || u.username === to || u.email === to);
   
   console.log('Sender found:', sender);
   console.log('Receiver found:', receiver);
@@ -86,6 +86,7 @@ exports.addMail = ({ from, to, subject, body }) => {
     to: receiver.id,
     subject,
     body,
+    labels: ["Inbox"],
   };
 
   sender.sent.push(mail);
@@ -108,7 +109,8 @@ exports.getLast50Mails = (userId) => {
     return {
       ...mail,
       from: fromUser ? fromUser.username : mail.from,
-      to: toUser ? toUser.username : mail.to
+      to: toUser ? toUser.username : mail.to,
+      labels: Array.isArray(mail.labels) ? [...mail.labels] : [],
     };
   });
   
@@ -122,15 +124,18 @@ exports.getMailById = (userId, mailId) => {
   return [...user.inbox, ...user.sent].find(m => m.id === mailId) || null;
 };
 
-exports.updateMail = (userId, mailId, { subject, body }) => {
+exports.updateMail = (userId, mailId, { subject, body, labels }) => {
   const user = users.find(u => u.id === userId);
   if (!user) return false;
 
   const mail = user.sent.find(m => m.id === mailId && m.from === user.id);
-  if (!mail) return false;
+  // If not found in sent, try inbox (user may update received mail labels)
+  const mailObj = mail || user.inbox.find(m => m.id === mailId);
+  if (!mailObj) return false;
 
-  if (subject !== undefined) mail.subject = subject;
-  if (body !== undefined) mail.body = body;
+  if (subject !== undefined) mailObj.subject = subject;
+  if (body !== undefined) mailObj.body = body;
+  if (labels !== undefined && Array.isArray(labels)) mailObj.labels = labels;
   return true;
 };
 
