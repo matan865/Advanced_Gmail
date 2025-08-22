@@ -95,7 +95,7 @@ exports.addMail = ({ from, to, subject, body }) => {
   sender.sent.push(sentCopy);
   receiver.inbox.push(inboxCopy);
 
-  return { ...base, labels: ["Sent", "Inbox"] };
+  return sentCopy;
 };
 
 function toPublicUser(u) {
@@ -108,7 +108,7 @@ exports.getLast50Mails = (userId) => {
   const user = users.find(u => u.id === userId);
   if (!user) return null;
 
-  const allMails = [...user.inbox, ...user.sent];
+  const allMails = [...user.inbox];
   
   // Convert UUIDs to usernames
   const mailsWithUserObjects = allMails.map(mail => {
