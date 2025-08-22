@@ -4,7 +4,7 @@ import IconButton from "./IconButton";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function MailContent({sender, subject, date ,labels = [], onToggleStarred }) {
+function MailContent({sender, subject, date, body, fromAvatar, fromEmail, labels = [], onToggleStarred }) {
   return (
     <div className="container ms-auto" style={{ height: "600px", width: "1000px", overflowY: "auto" }}>
       <div className="mail my-4">
@@ -22,11 +22,16 @@ function MailContent({sender, subject, date ,labels = [], onToggleStarred }) {
         </div>
 
         <div className="d-flex align-items-center mt-3">
-          <img src="https://via.placeholder.com/40" className="rounded-circle me-2" alt="profile" />
+          <img 
+            src={fromAvatar || "/avatars/avatar1.png"} 
+            className="rounded-circle me-2" 
+            alt="profile" 
+            style={{width: "40px", height: "40px"}}
+          />
           <div>
             <strong>{sender}</strong>
             <small className="text-muted ms-2">
-              &lt;{sender ? sender.toLowerCase().replace(" ", ".") : "unknown"}@mail.com&gt;
+              &lt;{fromEmail || 'unknown@mail.com'}&gt;
             </small>
 
             <div className="text-muted small">to me</div>
@@ -36,7 +41,7 @@ function MailContent({sender, subject, date ,labels = [], onToggleStarred }) {
 
       <div className="mail-content my-4">
         <p className="text-muted">
-          This is the content of the email from {sender}.
+          {body || "No content"}
         </p>
       </div>
 

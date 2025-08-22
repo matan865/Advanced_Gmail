@@ -80,20 +80,29 @@ exports.addMail = ({ from, to, subject, body }) => {
 
   if (!sender || !receiver) return null;
 
-  const mail = {
+  const base = {
     id: uuidv4(),
     from: sender.id,
     to: receiver.id,
     subject,
     body,
-    labels: ["Inbox"],
   };
 
-  sender.sent.push(mail);
-  receiver.inbox.push(mail);
+  // Create two copies so label changes don't mutate both
+  const sentCopy = { ...base, labels: ["Sent"] };
+  const inboxCopy = { ...base, labels: ["Inbox"] };
 
-  return mail;
+  sender.sent.push(sentCopy);
+  receiver.inbox.push(inboxCopy);
+
+  return { ...base, labels: ["Sent", "Inbox"] };
 };
+
+function toPublicUser(u) {
+  if (!u) return null;
+  const { id, username, email, avatarUrl, name } = u;
+  return { id, username, email, avatarUrl, name };
+}
 
 exports.getLast50Mails = (userId) => {
   const user = users.find(u => u.id === userId);
@@ -102,26 +111,34 @@ exports.getLast50Mails = (userId) => {
   const allMails = [...user.inbox, ...user.sent];
   
   // Convert UUIDs to usernames
-  const mailsWithUsernames = allMails.map(mail => {
+  const mailsWithUserObjects = allMails.map(mail => {
     const fromUser = users.find(u => u.id === mail.from);
     const toUser = users.find(u => u.id === mail.to);
-    
     return {
       ...mail,
-      from: fromUser ? fromUser.username : mail.from,
-      to: toUser ? toUser.username : mail.to,
+      from: toPublicUser(fromUser) || mail.from,
+      to: toPublicUser(toUser) || mail.to,
       labels: Array.isArray(mail.labels) ? [...mail.labels] : [],
     };
   });
   
-  return mailsWithUsernames.reverse().slice(0, 50);
+  return mailsWithUserObjects.reverse().slice(0, 50);
 };
 
 exports.getMailById = (userId, mailId) => {
   const user = users.find(u => u.id === userId);
   if (!user) return null;
 
-  return [...user.inbox, ...user.sent].find(m => m.id === mailId) || null;
+  const found = [...user.inbox, ...user.sent].find(m => m.id === mailId) || null;
+  if (!found) return null;
+  const fromUser = users.find(u => u.id === found.from);
+  const toUser = users.find(u => u.id === found.to);
+  return {
+    ...found,
+    from: toPublicUser(fromUser) || found.from,
+    to: toPublicUser(toUser) || found.to,
+    labels: Array.isArray(found.labels) ? [...found.labels] : [],
+  };
 };
 
 exports.updateMail = (userId, mailId, { subject, body, labels }) => {

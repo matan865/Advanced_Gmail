@@ -41,9 +41,15 @@ export default function InboxPage() {
   }, [emailList]);
 
   const visibleEmails = useMemo(() => {
-  // TODO(MongoDB)
-    return emailList
+    // TODO(MongoDB)
+    const filtered = emailList
       .filter(m => !selectedLabel || (Array.isArray(m.labels) && m.labels.includes(selectedLabel)));
+    // De-duplicate by id (in case the same mail exists in inbox+sent)
+    const byId = new Map();
+    for (const m of filtered) {
+      if (!byId.has(m.id)) byId.set(m.id, m);
+    }
+    return Array.from(byId.values());
   }, [emailList, selectedLabel]);
 
   const handleUpdateMail = async (mailId, newLabels) => {
@@ -63,7 +69,7 @@ export default function InboxPage() {
         onSearch={setSearchQuery}
       />
       <div className="row">
-        <div className="col-3">
+        <div className="col-2">
           <Sidebar
             isSidebarOpen={isSidebarOpen}
             onSelectLabel={setSelectedLabel}

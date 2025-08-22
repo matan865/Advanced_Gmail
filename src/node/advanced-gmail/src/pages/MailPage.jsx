@@ -5,12 +5,15 @@ import MailContent from "../components/mail/MailContent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function MailPage({ sender, subject, date, labels, onBack, updateMail }) {
+function MailPage({ from, subject, date, body, labels, onBack, updateMail }) {
+  const senderName = typeof from === 'object' && from ? (from.username || from.name) : from;
+  const fromAvatar = typeof from === 'object' && from ? from.avatarUrl : undefined;
+  const fromEmail = typeof from === 'object' && from ? from.email : undefined;
   return (
     <div className="mainContainer">
       <MailToolBar onBack={onBack} labels={labels} updateMail={updateMail} />
       <div className="mailContent">
-        <MailContent sender={sender} subject={subject} date={date} />
+        <MailContent sender={senderName} subject={subject} date={date} body={body} fromAvatar={fromAvatar} fromEmail={fromEmail} labels={labels} />
       </div>
     </div>
   );
