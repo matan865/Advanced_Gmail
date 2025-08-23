@@ -51,15 +51,17 @@ export default function InboxPage() {
     return emailList.filter(m => m._toId === userId || m._fromId === userId);
   }, [emailList, userId]);
 
+ 
   const labelCounts = useMemo(() => {
-    const counts = { Inbox: 0, Sent: 0, Trash: 0, Starred: 0, Drafts: 0 };
+    const counts = {};
     for (const m of userMails) {
-      const labs = m.labels || [];
-      if (m._toId === userId   && labs.includes("Inbox"))   counts.Inbox++;
-      if (m._fromId === userId && labs.includes("Sent"))    counts.Sent++;
-      if (labs.includes("Trash"))                            counts.Trash++;
-      if (labs.includes("Starred"))                          counts.Starred++;
-      if (labs.includes("Drafts"))                           counts.Drafts++;
+      const labs = Array.isArray(m.labels) ? m.labels : [];
+      // counting each label that appears
+      for (const l of labs) counts[l] = (counts[l] || 0) + 1;
+      if (labs.length === 0) {
+        if (m._toId === userId)   counts["Inbox"] = (counts["Inbox"] || 0) + 1;
+        if (m._fromId === userId) counts["Sent"]  = (counts["Sent"]  || 0) + 1;
+      }
     }
     return counts;
   }, [userMails, userId]);
@@ -101,7 +103,9 @@ export default function InboxPage() {
     if (!mail) return;
     const labs = Array.isArray(mail.labels) ? mail.labels : [];
     const hasStar = labs.includes("Starred");
-    const newLabels = hasStar ? labs.filter(l => l !== "Starred") : [...labs, "Starred"];
+    const newLabels = hasStar 
+    ? labs.filter(l => l !== "Starred") 
+    : [...labs, "Starred"];
     handleUpdateMail(mailId, newLabels);
   };
 

@@ -7,7 +7,8 @@ import IconButton from "./IconButton";
 function MailToolBar({ onBack, labels, updateMail }) {
 
   const moveTo = (label) => {
-    const next = (labels || []).filter(l => l !== "Inbox");
+    const current = Array.isArray(labels) ? labels : [];
+    const next = current.filter(l => l !== "Inbox");
     if (!next.includes(label)) next.push(label);
     updateMail(next);
     alert(`Moved to ${label}`);
@@ -15,11 +16,10 @@ function MailToolBar({ onBack, labels, updateMail }) {
   }
 
   const toggleLabel = (labelName) => {
-    if (!labels) return;
-
-    const updatedLabels = (labels || []).includes(labelName)
-      ? labels.filter((l) => l !== labelName)
-      : [...labels, labelName];
+    const current = Array.isArray(labels) ? labels : [];
+    const updatedLabels = current.includes(labelName)
+      ? current.filter((l) => l !== labelName)
+      : [...current, labelName];
 
     updateMail(updatedLabels);
   };

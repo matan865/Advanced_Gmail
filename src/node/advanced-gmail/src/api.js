@@ -25,7 +25,7 @@ async function apiRequest(endpoint, options = {}) {
     }
     
     const response = await fetch(url, finalOptions);
-    
+
     if (!response.ok) {
       if (response.status === 401) {
         // Token expired, redirect to login
@@ -36,9 +36,19 @@ async function apiRequest(endpoint, options = {}) {
       }
       throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
     }
-    
-    return await response.json();
-    
+
+    // Handle empty / non-JSON responses safely
+    if (response.status === 204) {
+      return null;
+    }
+    const contentType = response.headers.get('content-type') || '';
+    const text = await response.text();
+    if (!text) return null;
+    if (contentType.includes('application/json')) {
+      try { return JSON.parse(text); } catch { /* fall through */ }
+    }
+    return text; // fallback for text responses
+
   } catch (error) {
     console.error('API Request Error:', error);
     throw error;
