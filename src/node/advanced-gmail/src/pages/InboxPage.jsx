@@ -133,6 +133,7 @@ export default function InboxPage() {
             isSidebarOpen={isSidebarOpen}
             onSelectLabel={setSelectedLabel}
             labelCounts={labelCounts}
+            selectedLabel={selectedLabel}
             onCompose={() => setIsComposeOpen(true)}
           />
         </div>

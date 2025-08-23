@@ -67,7 +67,7 @@ function MailContent({sender, subject, date, body, fromAvatar, fromEmail, labels
     const displayFrom =
       typeof sender === "string" ? sender : (sender || "");
     const forwardedBody =
-      `\n\n---------- Forwarded message ----------\n` +
+      `\n\n--- Forwarded message ---\n` +
       `From: ${displayFrom} <${fromEmail || "unknown@mail.com"}>\n` +
       (dateStr ? `Date: ${dateStr}\n` : "") +
       `Subject: ${subject || ""}\n\n` +

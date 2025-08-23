@@ -1,25 +1,64 @@
-.sidebar-hidden {
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
-
-.sidebar-visible {
-  transform: translateX(0);
-  transition: transform 0.3s ease;
+:root{
+  --sidebar-width: 260px;
+  --sidebar-top: 10px; 
 }
 
 
+.sidebar-hidden { transform: translateX(calc(-1 * var(--sidebar-width))); transition: transform .25s ease; }
+.sidebar-visible { transform: translateX(0); transition: transform .25s ease; }
 
-.sidebar {
+
+#desktopSidebar{
   position: fixed;
-  top: 0;
+  top: var(--sidebar-top);
   left: 0;
-}
-
-#desktopSidebar {
-  width: 250px;
-  height: 100%;
+  width: var(--sidebar-width);
+  height: calc(100vh - var(--sidebar-top));
   overflow-y: auto;
   background-color: #f8f9fa;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  border-right: 1px solid rgba(0,0,0,.06);
+  z-index: 999;
+}
+
+
+#desktopSidebar .list-group{
+  gap: 6px;
+  margin: 0 0 10px 0;
+}
+
+
+#desktopSidebar .list-group-item{
+  border: 0;
+  background: transparent;
+  padding: 1px 8px;
+  border-radius: 8px;
+}
+#desktopSidebar .list-group-item:hover{
+  background: #eef2ff;
+}
+#desktopSidebar .list-group-item.active{
+  background: #e0e7ff;
+  color: #111827;
+}
+
+
+#desktopSidebar .btn-compose{
+  width: 100%;
+  border-radius: 999px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+}
+
+
+#desktopSidebar .section-title{
+  font-size: .8rem;
+  color: #6b7280;
+  margin: 6px 4px 8px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+@media (min-width: 992px){
+  .sidebar-hidden{ transform: none; }
 }
