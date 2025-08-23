@@ -89,14 +89,21 @@ export default function InboxPage() {
     return Array.from(byId.values());
   }, [userMails, selectedLabel, users, userId]);
 
+
   const handleUpdateMail = async (mailId, newLabels) => {
-    try {
-      await apiUpdateMail(mailId, { labels: newLabels });
-      setEmailList(prev => prev.map(m => (m.id === mailId ? { ...m, labels: Array.isArray(newLabels) ? newLabels : [] } : m)));
-    } catch (e) {
-      console.error("Failed to update mail labels", e);
-    }
-  };
+     try {
+      //Send to server
+      const updated = await apiUpdateMail(mailId, { labels: newLabels });
+       const nextLabels = Array.isArray(newLabels) ? newLabels : Array.isArray(updated?.labels) ? updated.labels : [];
+       // update email list
+       setEmailList(prev => prev.map(m => (m.id === mailId ? { ...m, labels: nextLabels } : m)));
+       setSelectedMail(prev => (prev && prev.id === mailId ? { ...prev, labels: nextLabels } : prev));
+     } catch (e) {
+       console.error("Failed to update mail labels", e);
+     }
+   };
+
+  
 
   const toggleStarred = (mailId) => {
     const mail = emailList.find(m => m.id === mailId);

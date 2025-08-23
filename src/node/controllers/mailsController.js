@@ -81,13 +81,21 @@ exports.getMail = (req, res) => {
 exports.updateMail = (req, res) => {
   const userId = req.userId; // From auth middleware
   const mailId = req.params.id;
-  const { subject, body } = req.body;
+  const { subject, body, labels } = req.body;
   if (!userId || !mailId) {
     return res.status(400).json({ error: 'Missing parameters' }); // Bad Request
   }
-  const updated = usersModel.updateMail(userId, mailId, { subject, body });
-  return updated ? res.sendStatus(204) : res.status(404).json({ error: 'Mail not found or not editable' }); // ? No Content : Not Found
+  const update = {};
+  if (subject !== undefined) update.subject = subject;
+  if (body !== undefined)    update.body    = body;
+  if (labels !== undefined)  update.labels  = Array.isArray(labels) ? labels : [];
+
+  const updated = usersModel.updateMail(userId, mailId, update);
+  return updated
+    ? res.status(200).json(updated)
+    : res.status(404).json({ error: 'Mail not found or not editable' });
 };
+
 
 exports.deleteMail = (req, res) => {
   const userId = req.userId; // From auth middleware

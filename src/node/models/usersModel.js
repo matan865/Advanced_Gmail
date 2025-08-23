@@ -141,20 +141,32 @@ exports.getMailById = (userId, mailId) => {
   };
 };
 
+
 exports.updateMail = (userId, mailId, { subject, body, labels }) => {
   const user = users.find(u => u.id === userId);
-  if (!user) return false;
+  if (!user) return null;
 
-  const mail = user.sent.find(m => m.id === mailId && m.from === user.id);
-  // If not found in sent, try inbox (user may update received mail labels)
-  const mailObj = mail || user.inbox.find(m => m.id === mailId);
-  if (!mailObj) return false;
+// try label : sent if not faond 
+  const mailObj =
+    user.sent.find(m => m.id === mailId && m.from === user.id) ||
+    user.inbox.find(m => m.id === mailId);
+
+  if (!mailObj) return null;
 
   if (subject !== undefined) mailObj.subject = subject;
-  if (body !== undefined) mailObj.body = body;
-  if (labels !== undefined && Array.isArray(labels)) mailObj.labels = labels;
-  return true;
+  if (body !== undefined)    mailObj.body    = body;
+  if (labels !== undefined)  mailObj.labels  = Array.isArray(labels) ? labels : [];
+
+  const fromUser = users.find(u => u.id === mailObj.from);
+  const toUser   = users.find(u => u.id === mailObj.to);
+  return {
+    ...mailObj,
+    from: toPublicUser(fromUser) || mailObj.from,
+    to:   toPublicUser(toUser)   || mailObj.to,
+    labels: Array.isArray(mailObj.labels) ? [...mailObj.labels] : [],
+  };
 };
+
 
 exports.deleteMail = (userId, mailId) => {
   const user = users.find(u => u.id === userId);
