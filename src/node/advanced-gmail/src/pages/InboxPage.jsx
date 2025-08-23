@@ -13,6 +13,7 @@ export default function InboxPage() {
   const [users, setUsers] = useState({});
   const [selectedMail, setSelectedMail] = useState(null);
   const [isComposeOpen, setIsComposeOpen] = useState(false);
+  const [composeInit, setComposeInit] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedLabel, setSelectedLabel] = useState("Inbox");
@@ -137,12 +138,18 @@ export default function InboxPage() {
         </div>
         <div className="col-10">
           {isComposeOpen ? (
-            <ComposePage onClose={() => setIsComposeOpen(false)} />
+            <ComposePage
+              onClose={() => setIsComposeOpen(false)}
+              initialTo={composeInit?.to || ""}
+              initialSubject={composeInit?.subject || ""}
+              initialBody={composeInit?.body || ""}
+            />
           ) : selectedMail ? (
             <MailPage
               {...selectedMail}
               onBack={() => setSelectedMail(null)}
               updateMail={labels => handleUpdateMail(selectedMail.id, labels)}
+              onReply={(init) => { setComposeInit(init); setIsComposeOpen(true); }}
             />
           ) : (
             <EmailList

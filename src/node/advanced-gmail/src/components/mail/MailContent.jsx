@@ -4,7 +4,7 @@ import IconButton from "./IconButton";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function MailContent({sender, subject, date, body, fromAvatar, fromEmail, labels = [], onToggleStarred }) {
+function MailContent({sender, subject, date, body, fromAvatar, fromEmail, labels = [], onToggleStarred , onReply  }) {
   return (
     <div className="container ms-auto" style={{ height: "600px", width: "1000px", overflowY: "auto" }}>
       <div className="mail my-4">
@@ -15,9 +15,9 @@ function MailContent({sender, subject, date, body, fromAvatar, fromEmail, labels
           </h5>
           <div className="d-flex align-items-center gap-3 text-muted">
             <small>{date}</small>
-            <IconButton icon={(labels || []).includes("Starred") ? "bi-star-fill text-warning" : "bi-star"}
+            <IconButton icon={(labels || []).includes("Starred") ? "bi-star-fill text-warning" : "bi-star"} title="Star"
               onClick={onToggleStarred } />
-            <i className="bi bi-reply"></i>
+            <i className="bi bi-reply" title="Reply" role="button" onClick={onReply} ></i>
           </div>
         </div>
 
@@ -46,7 +46,7 @@ function MailContent({sender, subject, date, body, fromAvatar, fromEmail, labels
       </div>
 
       <div className="ButtonsBelow d-flex gap-2">
-        <button type="button" className="btn btn-outline-secondary">
+        <button type="button" className="btn btn-outline-secondary" onClick={onReply}>
           <i className="bi bi-reply me-2"></i> Reply
         </button>
         <button type="button" className="btn btn-outline-secondary">

@@ -3,10 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { sendMail, getUsers } from "../api";
 
-function ComposePage({ onClose }) {
-  const [to, setTo] = useState("");
-  const [subject, setSubject] = useState("");
-  const [body, setBody] = useState("");
+function ComposePage({ onClose, initialTo = "", initialSubject = "", initialBody = "" }) {
+  const [to, setTo] = useState(initialTo);
+  const [subject, setSubject] = useState(initialSubject);
+  const [body, setBody] = useState(initialBody);
   const [users, setUsers] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isSending, setIsSending] = useState(false);
@@ -22,6 +22,11 @@ function ComposePage({ onClose }) {
       }
     })();
   }, []);
+
+ 
+  useEffect(() => { setTo(initialTo || ""); }, [initialTo]);
+  useEffect(() => { setSubject(initialSubject || ""); }, [initialSubject]);
+  useEffect(() => { setBody(initialBody || ""); }, [initialBody]);
 
   // Multi-recipient helpers (comma-separated tokens)
   const splitRecipients = (val) =>
