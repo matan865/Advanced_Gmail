@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function IconButton({ icon, label, badge, id, goTo, onClick }) {
+function IconButton({ icon, label, badge, id, goTo, onClick ,title}) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -17,6 +17,7 @@ function IconButton({ icon, label, badge, id, goTo, onClick }) {
       onClick={handleClick}
       role="button"
       style={{ cursor: "pointer" }}
+      title={title || label}
     >
       <i className={`bi ${icon}`}></i>
       <span>{label}</span>
