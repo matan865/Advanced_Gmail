@@ -11,7 +11,7 @@ function MailContent({sender, subject, date, body, fromAvatar, fromEmail, labels
         <div className="d-flex align-items-center justify-content-between">
           <h5 className="mb-0">
             {subject}
-            <span className="badge bg-light text-dark border ms-2">{labels}</span>
+            {labels && labels.map(label => <span key={label} className="badge bg-light text-dark border ms-2">{label}</span>)}
           </h5>
           <div className="d-flex align-items-center gap-3 text-muted">
             <small>{date}</small>

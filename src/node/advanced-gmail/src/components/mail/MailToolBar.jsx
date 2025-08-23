@@ -5,6 +5,15 @@ import "../../styles/mail.css";
 import IconButton from "./IconButton";
 
 function MailToolBar({ onBack, labels, updateMail }) {
+
+  const moveTo = (label) => {
+    const next = (labels || []).filter(l => l !== "Inbox");
+    if (!next.includes(label)) next.push(label);
+    updateMail(next);
+    alert(`Moved to ${label}`);
+    onBack();
+  }
+
   const toggleLabel = (labelName) => {
     if (!labels) return;
 
@@ -15,19 +24,6 @@ function MailToolBar({ onBack, labels, updateMail }) {
     updateMail(updatedLabels);
   };
 
-  function removeInbox({ SpecialLabels}) {
-    if (!labels) return;
-    const newLabels = [...labels];
-    if (!(newLabels || []).includes(SpecialLabels)) {
-      newLabels.push(SpecialLabels);
-    }
-    const inboxIndex = newLabels.indexOf("Inbox");
-    if (inboxIndex !== -1) {
-      newLabels.splice(inboxIndex, 1);
-    }
-    updateMail(newLabels);
-  }
-
   return (
     <div className="mailToolBar col-9">
       <div className="row">
@@ -36,17 +32,11 @@ function MailToolBar({ onBack, labels, updateMail }) {
           <IconButton icon="bi-arrow-left" onClick={onBack} />
 
           <span className="badge1 d-flex gap-3">
-            <IconButton icon="bi-inbox-fill" onClick={() => { removeInbox({ SpecialLabels: "Archive" });
-                alert("Moved to Archive");
-                onBack();}} />
+            <IconButton icon="bi-inbox-fill" onClick={() => moveTo("Archive")} />
             <IconButton icon="bi-exclamation-circle" onClick={() => toggleLabel("Important")} />
             <IconButton
               icon="bi-trash"
-              onClick={() => {
-                removeInbox({ SpecialLabels: "Trash" });
-                alert("Moved to Trash");
-                onBack();
-              }}
+              onClick={() => moveTo("Trash")}
             />
           </span>
 

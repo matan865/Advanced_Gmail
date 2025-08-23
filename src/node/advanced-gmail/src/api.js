@@ -84,6 +84,14 @@ export const signup = async (userData) => {
 };
 
 // ============================================================================
+//  User Functions
+// ============================================================================
+
+export const getUsers = async () => {
+  return apiRequest('/users');
+};
+
+// ============================================================================
 //  Mail Functions
 // ============================================================================
 
@@ -198,19 +206,4 @@ export const removeFromBlacklist = async (blacklistId) => {
   return apiRequest(`/blacklist/${blacklistId}`, {
     method: 'DELETE'
   });
-};
-
-// ============================================================================
-// User Functions
-// ============================================================================
-
-// Get all users
-export const getUsers = async () => {
-  return apiRequest('/users');
-};
-
- // Get user by ID
-
-export const getUserById = async (userId) => {
-  return apiRequest(`/users/${userId}`);
 };

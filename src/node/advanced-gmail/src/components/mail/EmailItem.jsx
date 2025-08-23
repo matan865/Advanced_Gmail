@@ -1,14 +1,16 @@
 import React from "react";
 
-function EmailItem({ from, to, subject, body, onOpen, onToggleStarred }) {
+function EmailItem({ from, to, subject, body, labels, onOpen, onToggleStarred, date }) {
   const fromName = typeof from === 'object' && from ? (from.username || from.name || 'Unknown') : (from || 'Unknown');
   const fromAvatar = typeof from === 'object' && from ? from.avatarUrl : undefined;
-  const dateStr = new Date().toLocaleDateString();
+  const dateStr = date ? new Date(date).toLocaleDateString() : new Date().toLocaleDateString();
+  const isStarred = labels && labels.includes("Starred");
+
   return (
     <tr className="email-item" role="button" onClick={onOpen}>
       <td><input type="checkbox" onClick={(e) => e.stopPropagation()} /></td>
       <td onClick={(e) => { e.stopPropagation(); onToggleStarred && onToggleStarred(); }}>
-        <i className="bi bi-star"></i>
+          <i className={`bi ${isStarred ? "bi-star-fill text-warning" : "bi-star"}`}></i>
       </td>
       <td>
         {fromAvatar && (

@@ -20,7 +20,9 @@ function IconButton({ icon, label, badge, id, goTo, onClick }) {
     >
       <i className={`bi ${icon}`}></i>
       <span>{label}</span>
-      {badge !== null && ( <span className="badge text-bg-primary rounded-pill">{badge}</span>)}
+        {badge !== undefined && badge !== null && (
+          <span className="badge text-bg-primary rounded-pill">{badge}</span>
+        )}
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-function Toolbar({ isSidebarOpen, setIsSidebarOpen , onSearch  }) {
+function Toolbar({ isSidebarOpen, setIsSidebarOpen, onSearch, userEmail }) {
   const navigate = useNavigate();
   const handleLogout = () => {
     try {
@@ -41,6 +41,7 @@ function Toolbar({ isSidebarOpen, setIsSidebarOpen , onSearch  }) {
         </div>
 
         <div className="col-4 d-flex justify-content-end align-items-center">
+          {userEmail && <span className="me-3">{userEmail}</span>}
           <button className="btn btn-outline-danger" onClick={handleLogout}>
             <i className="bi bi-box-arrow-right me-1"></i>
             Logout
