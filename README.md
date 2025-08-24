@@ -186,5 +186,5 @@ All changes are persisted and reflected in label counters.
 > Dev login page: `http://localhost:3001/login`
 > Dev building + running 
 ```bash
-docker-compose -f docker-compose.prod.yml -f docker-compose.dev.yml up -d --build
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 ```
