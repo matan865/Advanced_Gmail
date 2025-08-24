@@ -1,11 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IconButton from "./IconButton";
 import "../../styles/sidebar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { getLabels, createLabel as apiCreateLabel } from "../../api";
 
 function Sidebar({ isSidebarOpen, onSelectLabel, labelCounts , onCompose, selectedLabel }) {
   const [moreOpen, setMoreOpen] = useState(false);
+  const [addingLabel, setAddingLabel] = useState(false);
+  const [newLabelName, setNewLabelName] = useState("");
+  const [labelsList, setLabelsList] = useState(["Draft","Personal","Studies"]); // default labels
+
+ 
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await getLabels();
+        const names = Array.isArray(res) ? res.map(l => l?.name ?? l).filter(Boolean) : [];
+        const merged = Array.from(new Set([...(labelsList || []), ...names]));
+        setLabelsList(merged);
+      } catch (e) {
+      }
+    })();
+    
+  }, []);
+
+  const handleCreateLabel = async () => {
+    const name = (newLabelName || "").trim();
+    if (!name) return;
+    try {
+      try { await apiCreateLabel?.({ name }); } catch (_e) { /* ignore */ }
+      setLabelsList(prev => prev.includes(name) ? prev : [...prev, name]);
+      setNewLabelName("");
+      setAddingLabel(false);
+      onSelectLabel?.(name);
+    } catch (e) {
+      alert("Failed to create label");
+    }
+  };
+
   return (
     <div
       id="desktopSidebar"
@@ -73,7 +106,27 @@ function Sidebar({ isSidebarOpen, onSelectLabel, labelCounts , onCompose, select
             <IconButton icon="bi-gear me-2" label="Manage labels" />
           </li>
           <li className="list-group-item">
-            <IconButton icon="bi-plus me-2" label="Create new label" />
+            {addingLabel ? (
+              <div className="d-flex gap-2">
+                <input
+                  className="form-control form-control-sm"
+                  placeholder="New label name"
+                  value={newLabelName}
+                  onChange={(e) => setNewLabelName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleCreateLabel();
+                    if (e.key === "Escape") { setAddingLabel(false); setNewLabelName(""); }
+                  }}
+                  autoFocus
+                />
+                <button className="btn btn-sm btn-primary" onClick={handleCreateLabel}>Add</button>
+                <button className="btn btn-sm btn-outline-secondary" onClick={() => { setAddingLabel(false); setNewLabelName(""); }}>Cancel</button>
+              </div>
+            ) : (
+              <span role="button" onClick={() => setAddingLabel(true)}>
+                <IconButton icon="bi-plus me-2" label="Create new label" />
+              </span>
+            )}
           </li>
         </div>
       </ul>
@@ -81,15 +134,16 @@ function Sidebar({ isSidebarOpen, onSelectLabel, labelCounts , onCompose, select
       {/* Labels */}
       <div className="section-title">Labels</div>
       <ul className="list-group">
-        <li className={`list-group-item ${selectedLabel==="Draft"?"active":""}`}>
-          <IconButton icon="bi-caret-right" label="Draft" badge={labelCounts["Draft"] || 0} onClick={() => onSelectLabel("Draft")} />
-        </li>
-        <li className={`list-group-item ${selectedLabel==="Personal"?"active":""}`}>
-          <IconButton icon="bi-caret-right" label="Personal" badge={labelCounts["Personal"] || 0} onClick={() => onSelectLabel("Personal")} />
-        </li>
-        <li className={`list-group-item ${selectedLabel==="Studies"?"active":""}`}>
-          <IconButton icon="bi-caret-right" label="Studies" badge={labelCounts["Studies"] || 0} onClick={() => onSelectLabel("Studies")} />
-        </li>
+        {labelsList.map((name) => (
+          <li key={name} className={`list-group-item ${selectedLabel===name?"active":""}`}>
+            <IconButton
+              icon="bi-caret-right"
+              label={name}
+              badge={labelCounts[name] || 0}
+              onClick={() => onSelectLabel(name)}
+            />
+          </li>
+        ))}
       </ul>
     </div>
   );
