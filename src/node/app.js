@@ -16,11 +16,18 @@ app.use('/api/mails', mailsRouter);
 app.use('/api/labels', labelsRouter);
 app.use('/api/blacklist', blacklistRouter);
 
-const buildPath = path.join(__dirname, 'build');
+const buildPath = path.join(__dirname, 'public');
 app.use(express.static(buildPath));
 
-app.get((req, res) => {
-  res.sendFile(path.join(buildPath, 'index.html'));
+app.use((req, res, next) => {
+  if (req.method !== 'GET') return next();
+  if (req.path.startsWith('/api')) return next();
+  if (req.path.includes('.')) return next(); // בקשות לקבצים (css/js/png)
+
+  return res.sendFile(path.join(buildPath, 'index.html'));
 });
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(buildPath, 'index.html'));
+// });
 
 module.exports = app;

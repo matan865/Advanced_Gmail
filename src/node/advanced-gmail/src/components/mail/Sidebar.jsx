@@ -69,6 +69,9 @@ function Sidebar({ isSidebarOpen, onSelectLabel, labelCounts , onCompose, select
         <li className={`list-group-item ${selectedLabel==="Drafts"?"active":""}`}>
           <IconButton icon="bi-file-earmark-text" label="Drafts" badge={labelCounts["Drafts"] || 0} onClick={() => onSelectLabel("Drafts")}  />
         </li>
+        <li className={`list-group-item ${selectedLabel==="Spam"?"active":""}`}>
+          <IconButton icon="bi-exclamation-triangle-fill" label="Spam" badge={labelCounts["Spam"] || 0} onClick={() => onSelectLabel("Spam")}  />
+        </li>
       </ul>
 
       {/* Collapsible "More" section */}
@@ -102,9 +105,7 @@ function Sidebar({ isSidebarOpen, onSelectLabel, labelCounts , onCompose, select
           <li className={`list-group-item ${selectedLabel==="Trash"?"active":""}`}>
             <IconButton icon="bi-trash me-2" label="Trash" badge={labelCounts["Trash"] || 0} onClick={() => onSelectLabel("Trash")} />
           </li>
-          <li className="list-group-item">
-            <IconButton icon="bi-gear me-2" label="Manage labels" />
-          </li>
+          
           <li className="list-group-item">
             {addingLabel ? (
               <div className="d-flex gap-2">

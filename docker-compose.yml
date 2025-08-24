@@ -17,8 +17,6 @@ services:
     build:
       context: ./src/node        
       dockerfile: Dockerfile
-    env_file:
-      - ./src/node/secret.env
     ports:
       - "3000:3000"
     container_name: Gmail_client_node
