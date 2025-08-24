@@ -49,7 +49,7 @@ function Sidebar({ isSidebarOpen, onSelectLabel, labelCounts , onCompose, select
         >
           <span>
             <i className={`bi me-2 ${moreOpen ? "bi-chevron-up" : "bi-chevron-down"}`}></i>
-            More
+            {moreOpen ? "Less" : "More"}
           </span>
         </li>
 
