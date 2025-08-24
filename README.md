@@ -21,7 +21,7 @@ This builds both:
 
 ## 🚀 Running the Program
 
-### Start the server and client:
+### 2. Start the server and client:
 
 ```bash
 docker-compose up -d server && docker-compose up -d client
