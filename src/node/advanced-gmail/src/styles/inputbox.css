@@ -54,3 +54,8 @@
 .inputbox input:focus~i {
     height: 44px;
 }
+
+
+.next-btn{ 
+    margin-right: 120px;
+}   

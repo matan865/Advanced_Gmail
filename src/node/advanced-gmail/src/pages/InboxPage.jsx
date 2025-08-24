@@ -206,8 +206,11 @@ export default function InboxPage() {
               initialSubject={composeInit?.subject || ""}
               initialBody={composeInit?.body || ""}
               onSent={(created) => {
+                // Select "Sent" so the user sees their mail there
                 setSelectedLabel("Sent");
+                // Option 1: Full refresh from the server
                 load();
+                // Option 2 (fast): Update the list locally (if the returned copy already contains labels=["Sent"])
                 setEmailList(prev => [created, ...prev]);
               }}
             />

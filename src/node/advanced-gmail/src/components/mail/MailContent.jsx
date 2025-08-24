@@ -126,7 +126,7 @@ function MailContent({sender, subject, date, body, fromAvatar, fromEmail, labels
             {labels && labels.map(label => <span key={label} className="badge bg-light text-dark border ms-2">{label}</span>)}
           </h5>
           <div className="d-flex align-items-center gap-3 text-muted">
-            <small>{date}</small>
+            <small>{new Date(date).toLocaleString()}</small>
             <IconButton icon={(labels || []).includes("Starred") ? "bi-star-fill text-warning" : "bi-star"} title="Star"
               onClick={onToggleStarred } />
             <i className="bi bi-reply" title="Reply" role="button" onClick={onReply} ></i>

@@ -49,9 +49,10 @@ exports.sendMail = (req, res) => {
       }
       const mail = usersModel.addMail({ from: senderId, to, subject, body });
       if (!mail) {
-        return res.status(404).json({ error: 'Sender or recipient not found' });// Not Found
+        return res.status(404).json({ error: 'Sender or receiver not found' }); // Not Found
       }
-      res.status(201).location(`/api/mails/${mail.id}`).json({ok:"ok "}); // Created
+      // Return the sender's mail (with labels: ["Sent"])
+      res.status(201).location(`/api/mails/${mail.id}`).json(mail); // Created
     })
     .catch(err => {
       console.error('Link validation failed:', err.message);

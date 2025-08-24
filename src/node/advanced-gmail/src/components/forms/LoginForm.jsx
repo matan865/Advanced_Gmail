@@ -60,7 +60,7 @@ function LoginForm() {
         <Link to="/signup" className="btn btn-outline-primary">
           Create account
         </Link>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary next-btn">
           Next
         </button>
       </div>

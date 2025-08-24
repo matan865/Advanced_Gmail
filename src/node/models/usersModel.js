@@ -70,32 +70,44 @@ exports.findUser = (identifier, password) => {
 };
 
 exports.addMail = ({ from, to, subject, body }) => {
-  console.log('addMail called with:', { from, to, subject, body });
-  const sender = users.find(u => u.id === from);
+  const sender   = users.find(u => u.id === from);
   const receiver = users.find(u => u.id === to || u.username === to || u.email === to);
-  
-  console.log('Sender found:', sender);
-  console.log('Receiver found:', receiver);
-  console.log('All users:', users.map(u => ({ id: u.id, username: u.username })));
-
   if (!sender || !receiver) return null;
 
-  const base = {
+  const now = new Date().toISOString();
+
+  // Copy for sender - "Sent"
+  const sentMail = {
     id: uuidv4(),
     from: sender.id,
     to: receiver.id,
     subject,
     body,
+    labels: ["Sent"],
+    date: now,
   };
+  sender.sent = Array.isArray(sender.sent) ? sender.sent : [];
+  sender.sent.unshift(sentMail);
 
-  // Create two copies so label changes don't mutate both
-  const sentCopy = { ...base, labels: ["Sent"] };
-  const inboxCopy = { ...base, labels: ["Inbox"] };
+  // Copy for receiver - "Inbox"
+  const inboxMail = {
+    id: uuidv4(),
+    from: sender.id,
+    to: receiver.id,
+    subject,
+    body,
+    labels: ["Inbox"],
+    date: now,
+  };
+  receiver.inbox = Array.isArray(receiver.inbox) ? receiver.inbox : [];
+  receiver.inbox.unshift(inboxMail);
 
-  sender.sent.push(sentCopy);
-  receiver.inbox.push(inboxCopy);
-
-  return sentCopy;
+  // Return the sender's copy, enriched with user information
+  return {
+    ...sentMail,
+    from: toPublicUser(sender)   || sentMail.from,
+    to:   toPublicUser(receiver) || sentMail.to,
+  };
 };
 
 function toPublicUser(u) {
@@ -108,7 +120,8 @@ exports.getLast50Mails = (userId) => {
   const user = users.find(u => u.id === userId);
   if (!user) return null;
 
-  const allMails = [...user.inbox];
+  // include both Inbox and Sent so "Sent" actually appears for the sender
+  const allMails = [...user.inbox, ...user.sent];
   
   // Convert UUIDs to usernames
   const mailsWithUserObjects = allMails.map(mail => {
@@ -122,7 +135,9 @@ exports.getLast50Mails = (userId) => {
     };
   });
   
-  return mailsWithUserObjects.reverse().slice(0, 50);
+  return mailsWithUserObjects
+    .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+    .slice(0, 50);
 };
 
 exports.getMailById = (userId, mailId) => {
