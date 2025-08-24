@@ -32,12 +32,12 @@ docker-compose up -d server && docker-compose up -d client
 - Labels (create, assign, )
 - Compose, Reply, Forward with suggestions
 - Search and pagination
-
+- 
+# 🚨 Navigate to `http://localhost:3000/login`. 🚨
 ## Login
 
 ![Login screen](screenshots/frontend/01-login.png)
 
-Navigate to `http://localhost:3001/login`.
 
 - Enter your **email** and **password**.
 - If you don’t have an account yet, click **Create account** to register first.
