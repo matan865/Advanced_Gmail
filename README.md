@@ -46,7 +46,7 @@ Navigate to `http://localhost:3001/login`.
 
 ## Create Account
 
-![Create account](docs/screenshots/02-create-account.png)
+![Create account](screenshots/frontend/02-create-account.png)
 
 From the login screen, click **Create account** and complete the registration form:
 
