@@ -35,10 +35,6 @@ exports.add = (req, res) => {
 };
 
 exports.remove = (req, res) => {
-  //const fullPath = req.originalUrl; 
-  //const prefix = '/api/blacklist/';
-  //const link = decodeURIComponent(fullPath.slice(prefix.length));
-  //console.log('Trying to delete:', link);
   const link = req.params.id; 
   if (!link) return res.status(400).json({ error: 'link is required' });
 

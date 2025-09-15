@@ -1,30 +1,9 @@
-const { v4: uuidv4 } = require('uuid');
-const labels = [];
 
-exports.getAllLabels = () => labels;
+const { Schema, model } = require('mongoose');
 
-exports.getLabelById = (id) => labels.find(label => label.id === id);
+const labelSchema = new Schema({
+  name:  { type: String, required: true, trim: true },
+  color: { type: String, default: 'gray', trim: true },
+}, { timestamps: true });
 
-
-
-exports.createLabel = ({ name, color }) => {
-  const newLabel = {id: uuidv4(), name, color};
-  labels.push(newLabel);
-  return newLabel;
-};
-
-
-exports.updateLabel = (id, { name, color }) => {
-  const label = labels.find(label => label.id === id);
-  if (!label) return null;
-  if (name !== undefined) label.name = name;
-  if (color !== undefined) label.color = color;
-  return label;
-};
-
-exports.deleteLabel = (id) => {
-  const index = labels.findIndex(label => label.id === id);
-  if (index === -1) return false;
-  labels.splice(index, 1);
-  return true;
-};
+module.exports = model('Label', labelSchema);

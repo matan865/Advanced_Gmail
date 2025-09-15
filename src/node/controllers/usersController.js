@@ -1,34 +1,80 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const usersModel = require('../models/usersModel');
-const SECRET = process.env.JWT_SECRET;
 
-exports.registerUser = (req, res) => {
-  const { username, password, name, email, avatarUrl } = req.body;
+const User = require('../models/usersModel');
 
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Missing fields' });
+async function generateUniqueUsername(base) {
+  const clean = String(base || '').trim().toLowerCase();
+  if (!clean) return null;
+  let candidate = clean, i = 1;
+  while (await User.exists({ username: candidate })) {
+    candidate =  clean + i++;
   }
+  return candidate;
+}
 
-  const newUser = usersModel.addUser({ username, password, name, email, avatarUrl });
+exports.registerUser = async (req, res) => {
+  try {
+    let { username, password, name, avatarUrl } = req.body; 
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Missing fields' });
+    }
 
-  if (!newUser) {
-    return res.status(409).json({ error: 'User already exists' });
+    const uniqueUsername = await generateUniqueUsername(username);
+    if (!uniqueUsername) {
+      return res.status(400).json({ error: 'Invalid username' });
+    }
+
+    const emailNorm   = uniqueUsername + "@mail.com";
+    const finalName   = name || uniqueUsername;
+    const finalAvatar = avatarUrl || '/avatars/avatar1.png';
+
+    const u = await User.create({
+      username: uniqueUsername,
+      password,         
+      name: finalName,
+      email: emailNorm,
+      avatarUrl: finalAvatar
+    });
+
+    const obj = u.toObject();
+    return res.status(201).json({
+      id: String(obj._id),
+      username: obj.username,
+      name: obj.name,
+      email: obj.email,
+      avatarUrl: obj.avatarUrl,
+      createdAt: obj.createdAt,
+      updatedAt: obj.updatedAt
+    });
+  } catch (e) {
+    if (e.code === 11000) return res.status(409).json({ error: 'User already exists' });
+    console.error(e);
+    return res.status(400).json({ error: 'Signup failed' });
   }
-  // For signup we return the created user (without password)
-  return res.status(201).json(newUser);
 };
 
-exports.getAllUsers = (req, res) => {
-  const users = usersModel.getAllUsers();
-  res.status(200).json(users);
+exports.getAllUsers = async (req, res) => {
+  const users = await User.find().select('-password -__v').lean();
+  res.status(200).json(users.map(u => ({
+    id: String(u._id),
+    username: u.username,
+    name: u.name,
+    email: u.email,
+    avatarUrl: u.avatarUrl,
+    createdAt: u.createdAt,
+    updatedAt: u.updatedAt
+  })));
 };
 
-exports.getUser = (req, res) => {
-  const user = usersModel.getUserById(req.params.id);
-
-  if (!user) {
-    return res.status(404).json({ error: 'User not found' });
-  }
-   res.status(200).json(user);
+exports.getUser = async (req, res) => {
+  const u = await User.findById(req.params.id).select('-password -__v').lean();
+  if (!u) return res.status(404).json({ error: 'User not found' });
+  res.status(200).json({
+    id: String(u._id),
+    username: u.username,
+    name: u.name,
+    email: u.email,
+    avatarUrl: u.avatarUrl,
+    createdAt: u.createdAt,
+    updatedAt: u.updatedAt
+  });
 };
