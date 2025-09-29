@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">My Gmail</string>
+    <string name="email_username">email / username</string>
+    <string name="nav_close">Close navigation drawer</string>
+    <string name="nav_open">Open navigation drawer</string>
+    <string name="search"/>
+    <string name="settings">Settings</string>
+    <style name="Base.Theme.MyGmail" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        
+    </style>
+    <style name="Theme.MyGmail" parent="Base.Theme.MyGmail"/>
+</resources>
