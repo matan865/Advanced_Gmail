@@ -1,22 +1,24 @@
 # Advanced Gmail
-
-In this project, we create a Gmail-like website and email simulation system to learn various tools taught in the *Advanced Systems Programming* course.2222222
+##Overview
+My Gmail is a gmail application created by Matan Badichi, Yakir Sharabi, and Roi Meiri, the three founders of the platform. It allows users to register, log in, and engage in conversations with others using mails. Whether you want to have a chat with friends or an institution, My Gmail is the perfect place for you!
 
 ---
 
-## 🛠 Installation
+##Features
+User Registration: Create an account by providing your username, image, and password.
 
-### 1. Build the Docker image for the server and client
+Note: Each username is unique, ensuring a distinct identity for every user.
 
-```bash
-docker-compose build
-```
+User Authentication: Log in to the application using your registered credentials.
 
-This builds both:
+Mailbox Management:
+Inbox: View all incoming emails.
+Sent: View emails that have been sent to others.
+Drafts: Store emails of your using.
+Spam: Manage emails identified as spam.
+Trash: View emails that have been deleted by the user.
 
-* The C++ server (Gmail_server) located under server
-* The Node.js client (Gmail_client) located under client
-
+Smooth Navigation: Switch effortlessly between registration and chat screens with our intuitive navigation system.
 ---
 
 ## 🚀 Running the Program
