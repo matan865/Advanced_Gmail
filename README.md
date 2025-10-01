@@ -135,6 +135,7 @@ From the login screen, click **Create account** and complete the registration fo
   The system will automatically generate your email address from it and display it beneath the field  
   (e.g., `user205` → `user205@mail.com`).
 - **Full name**
+- **email(optinal)** - enter your mail
 - **Date of birth** (dd/mm/yyyy)
 - **Password** and **Confirm password**
 - **Gender**
@@ -196,6 +197,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
