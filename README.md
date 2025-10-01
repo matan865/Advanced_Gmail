@@ -156,7 +156,7 @@ After signing in, you land on your personal Inbox .
 - At the bottom of the screen, there's a **Compose** button that allows users to create and send new messages.
 - The Inbox is organized as a **linear list of received emails**, with each email having three action buttons: **Spam**, **Draft**, and **Delete**.
 - By clicking on any email, you can read its content.
-- After composing an email, you need to click on Inbox in the sidebar to get the new mail. 
+- After composing an email, you need to click on Inbox in the sidebar to see the new mail. 
 
 
 ## Sidebar Navigation
@@ -194,6 +194,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
