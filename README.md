@@ -115,7 +115,7 @@ now create an emulator or connect with your phone using USB
 
 ![Login Screenshot](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/sign_in.png)
 
-![Dark Login Screenshot](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/Dark_login.png)
+![Dark Login Screenshot](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/Dark_login.jpg)
 
 
 ## Login for phone
@@ -195,6 +195,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
