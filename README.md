@@ -98,6 +98,13 @@ The expected output is:
 🚀 Server running on http://localhost:3000
 
 ## Running the client
+You need to open the client folder in AndroidStudio
+Navigate to the client folder write cmd and than you need to enter your full path in order to enter AndroidStudio directly from the cmd
+for example that worked for yakir's computer: 
+```bash
+"C:\Program Files\Android\Android Studio\bin\studio64.exe" .
+```
+
 ## Login for emulator
  
 - Enter your **email** and **password**.
@@ -189,6 +196,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
