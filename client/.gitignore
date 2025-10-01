@@ -1,0 +1,19 @@
+# Ignore any build artifacts
+#**/build/
+**/CMakeFiles/
+**/CMakeCache.txt
+**/Makefile
+**/cmake_install.cmake
+**/CTestTestfile.cmake
+**/progress.marks
+**/src/node/node_modules/
+**/node_modules/
+
+# Logs
+**/src/node/logs/
+**/logs/
+
+# Executables
+*.exe
+*.out
+*.app
