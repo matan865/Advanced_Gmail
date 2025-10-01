@@ -104,7 +104,7 @@ for example that worked for yakir's computer:
 ```bash
 "C:\Program Files\Android\Android Studio\bin\studio64.exe" .
 ```
-
+now create an emulator or connect with your phone using USB 
 ## Login for emulator
  
 - Enter your **email** and **password**.
@@ -196,6 +196,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
