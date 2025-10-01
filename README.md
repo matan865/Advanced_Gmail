@@ -143,12 +143,6 @@ From the login screen, click **Create account** and complete the registration fo
 
 Click **Create account** to finish. Your new credentials can then be used to sign in.
 
-** Username suggestion**
-
-If the chosen **username** is already taken, the app proposes an available alternative (e.g., `user2051`).  
-Click **Use suggested** to apply it — the derived email address updates accordingly.
-
-
 
 ## Inbox  (Home)
  
@@ -197,6 +191,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
