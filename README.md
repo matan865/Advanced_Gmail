@@ -114,6 +114,7 @@ now create an emulator or connect with your phone using USB
 - **Dark Mode Support**: Users can switch the login screen to Dark Mode for a more comfortable viewing experience in low-light environments.
 
 ![Login Screenshot](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/sign_in.png)
+
 ![Dark Login Screenshot](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/Dark_login.png)
 
 
@@ -194,6 +195,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
