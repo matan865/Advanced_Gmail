@@ -93,7 +93,9 @@ After that run the server with the following command:
 ```bash
 node server.js
 ```
-
+The expected output is:
+✅ Mongo connected
+🚀 Server running on http://localhost:3000
 
 ## Running the client
 ## Login for emulator
@@ -187,6 +189,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
