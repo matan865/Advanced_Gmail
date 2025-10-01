@@ -12,7 +12,7 @@ My Gmail is a gmail application created by Matan Badichi, Yakir Sharabi, and Roi
 
 - **Mailbox Management**:
   - **Inbox**: View all incoming emails.  
-  - **Sent**: Check the emails you’ve sent.  
+  - **Sent**: Check the emails you’ve sent. 
   - **Drafts**: Save the mails that you consider as drafts.  
   - **Spam**: Manage emails identified as unwanted or harmful.  
   - **Trash**: Access and manage deleted emails.
@@ -114,6 +114,7 @@ now create an emulator or connect with your phone using USB
 - **Dark Mode Support**: Users can switch the login screen to Dark Mode for a more comfortable viewing experience in low-light environments.
 
 ![Login Screenshot](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/sign_in.png)
+![Login Screenshot](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/Dark_login.png)
 
 
 ## Login for phone
@@ -193,6 +194,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
