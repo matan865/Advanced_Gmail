@@ -150,11 +150,13 @@ Click **Create account** to finish. Your new credentials can then be used to sig
 
 After signing in, you land on your personal Inbox .
 
-- The **sidebar** at the top-left corner provides quick access to Inbox, Starred, Snoozed, Important, Sent, Drafts, Spam, and custom **Labels**.
+- The **sidebar** at the top-left corner provides quick access to Inbox, Sent, Drafts, Spam, trash and logout.
 - Use the **search bar** at the top-right corner to find messages.
 - At the bottom of the screen, there's a **Compose** button that allows users to create and send new messages.
 - The Inbox is organized as a **linear list of received emails**, with each email having three action buttons: **Spam**, **Draft**, and **Delete**.
 - By clicking on any email, you can read its content.
+- After composing an email, you need to click on Inbox in the sidebar to get the new mail. 
+
 
 ## Sidebar Navigation
 
@@ -191,6 +193,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
