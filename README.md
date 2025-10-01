@@ -83,9 +83,9 @@ npm install mongoose
 npm install express
 ```
 
-4. Start the server:
-Note: Ensure you're in the initial directory advanced_system_programing/App/src/node.
-if you are in directory advanced_system_programing/App, use:
+4. Start the server: 
+in your directory you need to enter these folders.
+
 ```bash
 cd src/node
 ```
@@ -187,6 +187,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
