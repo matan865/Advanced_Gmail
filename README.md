@@ -75,7 +75,8 @@ docker start mongo
 we expet to get "mongo" in the terminal.
 
 
-3. Install required dependencies(if you didnt already):  dotenv, mongoose, express
+3. Required dependencies:  dotenv, mongoose, express
+if you dont have these dependencies than do these commends in the terminal:
 ```bash
 npm install dotenv
 npm install mongoose
@@ -186,6 +187,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
