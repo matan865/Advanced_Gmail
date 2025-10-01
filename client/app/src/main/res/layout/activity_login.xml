@@ -68,7 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="160dp"
-                android:hint="Enter your email"
+                android:hint="Enter your username"
                 app:boxStrokeWidth="1dp"
                 app:layout_constraintStart_toEndOf="@id/tvTitle"
                 app:layout_constraintEnd_toEndOf="parent"
