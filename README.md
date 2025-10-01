@@ -13,7 +13,7 @@ My Gmail is a gmail application created by Matan Badichi, Yakir Sharabi, and Roi
 - **Mailbox Management**:
   - **Inbox**: View all incoming emails.  
   - **Sent**: Check the emails you’ve sent.  
-  - **Drafts**: Save unfinished emails to continue later.  
+  - **Drafts**: Save the mails that you consider as drafts.  
   - **Spam**: Manage emails identified as unwanted or harmful.  
   - **Trash**: Access and manage deleted emails.
 
@@ -184,5 +184,6 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
