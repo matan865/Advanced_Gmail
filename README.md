@@ -117,6 +117,7 @@ now create an emulator or connect with your phone using USB
 
 
 ## Login for phone
+### make sure your language settings on your phone is english.  
 ### **Becuse you are running on your phone you need to press the running on phone button first, even if you are going to create a new accont you need to press on the running on phone button** (it looks like nothing happend but believe us a lot have changed in the universe ;) )
 - Enter your **email** and **password**.
 - If you don’t have an account yet, click **Create account** to register first.
@@ -193,6 +194,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
