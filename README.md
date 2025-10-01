@@ -1,56 +1,123 @@
 # Advanced Gmail
-##Overview
+## Overview
 My Gmail is a gmail application created by Matan Badichi, Yakir Sharabi, and Roi Meiri, the three founders of the platform. It allows users to register, log in, and engage in conversations with others using mails. Whether you want to have a chat with friends or an institution, My Gmail is the perfect place for you!
 
 ---
+## Features
 
-##Features
-User Registration: Create an account by providing your username, image, and password.
+- **User Registration**: Create an account by providing your username, profile image, and password.  
+  **Note**: Each username is unique, ensuring a distinct identity for every user.
 
-Note: Each username is unique, ensuring a distinct identity for every user.
+- **User Authentication**: Log in to the application using your registered credentials.
 
-User Authentication: Log in to the application using your registered credentials.
+- **Mailbox Management**:
+  - **Inbox**: View all incoming emails.  
+  - **Sent**: Check the emails you’ve sent.  
+  - **Drafts**: Save unfinished emails to continue later.  
+  - **Spam**: Manage emails identified as unwanted or harmful.  
+  - **Trash**: Access and manage deleted emails.
 
-Mailbox Management:
-Inbox: View all incoming emails.
-Sent: View emails that have been sent to others.
-Drafts: Store emails of your using.
-Spam: Manage emails identified as spam.
-Trash: View emails that have been deleted by the user.
+- **Modern Design**: Enjoy a clean, user-friendly interface built with Android best practices.
 
-Smooth Navigation: Switch effortlessly between registration and chat screens with our intuitive navigation system.
 ---
 
-## 🚀 Running the Program
+ ## Database
 
-### 2. Start the server and client:
+Advanced Gmail uses **MongoDB** as its database to store user and email information. MongoDB is a popular NoSQL database known for its scalability and flexibility in managing large amounts of data.
 
+### Using MongoDB
+
+To use MongoDB with Advanced Gmail, follow these steps:
+
+1. **Install MongoDB**:
+   - Visit the [MongoDB website](https://www.mongodb.com/try/download/community) and download the latest version of MongoDB suitable for your operating system.
+   - Follow the installation instructions provided by MongoDB to set up and configure the database on your system.
+
+2. **Start MongoDB**:
+   - Once installed, start MongoDB by running the appropriate command for your operating system:
+     ```bashs
+     docker run -d --name mongo -p 27017:27017 mongo:6
+     ```
+
+3. **Connect to MongoDB**:
+   - Advanced Gmail will automatically connect to the running MongoDB instance and use it to store and retrieve data.
+
+---
+
+## Requirements
+
+Before running Advanced Gmail, ensure that you have the following requirements fulfilled:
+
+1. **Node.js**:  
+   Make sure you have Node.js installed on your system. You can download and install it from the official website: [Node.js](https://nodejs.org).
+
+2. **MongoDB**:  
+   Install MongoDB to set up the database for Advanced Gmail. Follow the steps mentioned in the "Using MongoDB" section above to install and configure MongoDB.
+---
+You are now all set to run Advanced Gmail and start managing your emails with the help of MongoDB! Enjoy the seamless email experience.
+
+## 🚀 Running the server
+
+Clone the project repository to your local machine.
+Open the terminal or command prompt and navigate to the server's directory.
+Follow the steps below to run the application:
+
+1. **Start MongoDB**: (if you didnt already) 
+   To run MongoDB, use the following Docker command:
+   ```bash
+   docker run -d --name mongo -p 27017:27017 mongo:6
+
+2. If MongoDB is already running:
+If you have already run the above command previously, you can start MongoDB with:
 ```bash
-docker-compose up -d server && docker-compose up -d client
+docker start mongo
 ```
 
-## Features
-- Login, Singup, Inbox, Sent, Starred, Archive, Trash
-- Labels (create, assign, )
-- Compose, Reply, Forward with suggestions
-- Search and pagination
-- 
-# 🚨 Navigate to `http://localhost:3000/login`. 🚨
-## Login
+3. Install required dependencies:  dotenv, mongoose, express
+```bash
+npm install dotenv
+npm install mongoose
+npm install express
+```
 
-![Login screen](screenshots/frontend/01-login.png)
+4. Start the server:
+Note: Ensure you're in the initial directory advanced_system_programing/App/src/node.
+if you are in directory advanced_system_programing/App, use:
+```bash
+cd src/node
+```
+After that run the server with the following command:
+```bash
+node server.js
+```
 
 
+## Running the client
+## Login for emulator
+ 
 - Enter your **email** and **password**.
 - If you don’t have an account yet, click **Create account** to register first.
 - Click **Next** to continue and sign in.
+- **Becuse you are running on the emulator dont press the running on phone button**
+- **Dark Mode Support**: Users can switch the login screen to Dark Mode for a more comfortable viewing experience in low-light environments.
+
+![Login Screenshot](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/sign_in.png)
+
+
+## Login for phone
+- **Becuse you are running on your phone you need to press the running on phone button first, even if you are going to create a new accont you need to press on the running on phone button** (it looks like nothing happend but believe us a lot have changed in the universe ;) )
+- Enter your **email** and **password**.
+- If you don’t have an account yet, click **Create account** to register first.
+- Click **Next** to continue and sign in.
+- **Dark Mode Support**: Users can switch the login screen to Dark Mode for a more comfortable viewing experience in low-light environments.
 
 
 ## Create Account
 
-![Create account](screenshots/frontend/02-create-account.png)
-
 From the login screen, click **Create account** and complete the registration form:
+
+![Create account](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/Create_Account.png)
+
 
 - **Username** — choose a unique username.  
   The system will automatically generate your email address from it and display it beneath the field  
@@ -63,111 +130,54 @@ From the login screen, click **Create account** and complete the registration fo
 
 Click **Create account** to finish. Your new credentials can then be used to sign in.
 
-### Username suggestion
-
-![Username suggestion](screenshots/frontend/03-username-suggestion.png)
+** Username suggestion**
 
 If the chosen **username** is already taken, the app proposes an available alternative (e.g., `user2051`).  
 Click **Use suggested** to apply it — the derived email address updates accordingly.
 
 
-## Mailbox (Home)
 
-![Mailbox home](screenshots/frontend/04-mailbox.png)
+## Inbox  (Home)
+ 
+![Mailbox home](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/Mailbox.png)
 
-After signing in, you land on your personal mailbox.
+After signing in, you land on your personal Inbox .
 
-- Your **signed-in email address** is shown in the top-right corner — use it to verify which user is currently logged in.
-- The **sidebar** provides quick access to Inbox, Starred, Snoozed, Important, Sent, Drafts, Spam, and custom **Labels**.
-- Use the **search bar** at the top to find messages.
-- The **toolbar** above the list supports selection, refresh, pagination.
-- Message **counts** appear next to each label.
+- The **sidebar** at the top-left corner provides quick access to Inbox, Starred, Snoozed, Important, Sent, Drafts, Spam, and custom **Labels**.
+- Use the **search bar** at the top-right corner to find messages.
+- At the bottom of the screen, there's a **Compose** button that allows users to create and send new messages.
+- The Inbox is organized as a **linear list of received emails**, with each email having three action buttons: **Spam**, **Draft**, and **Delete**.
+- By clicking on any email, you can read its content.
 
-All functionality behaves like a standard email client (compose, reply, forward, labels, archive/trash, star, search ).
+## Sidebar Navigation
+
+The application provides a **sidebar** for easy navigation. It includes the following buttons:
+
+![Sidebar Navigation](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/sidebar.png)
+
+
+- **Inbox**: View all received emails in your inbox.
+- **Send**: Access the sent emails.
+- **Drafts**: View and manage emails you've saved as drafts.
+- **Spam**: Manage emails marked as spam.
+- **Trash**: View and manage deleted emails.
+- **Logout**: Log out of the application.
+
+These buttons provide quick access to different sections of the email system, making it easy to manage your emails and navigate through the app.
+
+## Reading a Message 
+
+ ![ReadMail](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/ReadingMessge.png)
 
 
 ## Compose a Message
-
-![Compose new message](screenshots/frontend/05-compose.png)
-
+ 
+![Compose new message](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/Compose.png)
 - Click **Compose** to open the new-message panel.
-- In the **To** field, start typing to see **autocomplete** suggestions for users in the system (username + email).
-- **Tip:** type `@` to list **all** users (every address contains `@`).
+- In the **To** field, type username of users in the system.
 - Enter your message and click **Send**.
 - A confirmation appears once the email is sent successfully.
 
-## Inbox 
-
-![Inbox actions: refresh & star](screenshots/frontend/06-inbox-actions.png)
-
-- After sending a message, click the **Refresh** icon in the inbox toolbar to fetch the latest emails.
-- You can **star/unstar** a message directly from the Inbox list by clicking the star icon next to it.
-- The **badge counters** (e.g., Inbox, Starred) update accordingly.
-
-
-## Reading a Message — Toolbar & Labels
-
-![Mail toolbar and label picker](screenshots/frontend/07-mail-toolbar.png)
-
-While viewing a message, use the toolbar at the top to manage it:
-
-- **Archive** — move the message out of the Inbox and into Archive.
-- **Delete** — move the message to Trash.
-- **Mark as Important** — toggle the “Important” label.
-- **Move / Label** — click the folder/menu button to open the label picker.  
-  Choose any custom label to apply it immediately.
-- **Star** — toggle the star from the header (or from the list view).
-
-All changes are persisted and reflected in label counters.
- 
-### 🔐 Authentication Note
-  
-- All API requests (except registration and login) require a user-id header.
-- Requests without a valid user-id will return 400 or 404 errors.
-- 
-- **Token-based auth (Bearer).**  
-  The client authenticates by requesting a token and then attaching it to every API call.
-
-- **Login**  
-  `POST /api/tokens` with `{ email, password }`.  
-  In the UI the field is labeled “Username”, but the frontend sends it as **email** to the API.
-
-- **On success**  
-  The app stores `token` and `userId` in `localStorage`. Subsequent requests automatically include  
-  `Authorization: Bearer <token>` and `Content-Type: application/json`.
-
-- **Auto sign-out on 401**  
-  If the API returns **401 Unauthorized**, the client clears `token`/`userId` and redirects to `/login`.
-
-- **Sign up**  
-  `POST /api/users` with `{ username, password, name, avatarUrl }`.  
-  The backend derives the email from the username (e.g., `alice` → `alice@mail.com`).
-
-- **Logout**  
-  Use the **Logout** button to clear credentials and return to the login screen.
-
-- **Persistence**  
-  You remain signed in across page reloads until you log out or the token expires.
-
-
-## 📝 Notes
-* User and email logic uses UUID for global uniqueness.
-
----
-
-## ⚙️ Technologies Used
-
-* C++ (server logic)
-* Python 3 (TCP client)
-* Node.js & Express (email API)
-* Docker
-* GoogleTest
-* CMake
-* React
-* HTML + CSS
-* Javascript
-
----
 
 ## 👤 Authors
 
@@ -175,8 +185,3 @@ All changes are persisted and reflected in label counters.
 * Matan Badichi
 * Yakir Sharabi
 
-> Dev login page: `http://localhost:3001/login`
-> Dev building + running 
-```bash
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
-```
