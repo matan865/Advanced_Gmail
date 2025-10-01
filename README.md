@@ -146,7 +146,7 @@ Click **Create account** to finish. Your new credentials can then be used to sig
 
 ## Inbox  (Home)
  
-![Mailbox home](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/Mailbox.png) ![Dark inbox Screenshot](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/dark_inbox.jpg)
+![Mailbox home](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/Mailbox.png) ![Dark inbox Screenshot](https://github.com/RoyMeiri/Advanced_Gmail/raw/yakir_branch/screenshots/Dark_inbox.jpg)
 
 After signing in, you land on your personal Inbox .
 
@@ -193,6 +193,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
