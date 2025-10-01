@@ -117,7 +117,7 @@ now create an emulator or connect with your phone using USB
 
 
 ## Login for phone
-<span style="font-size:30px">- **Becuse you are running on your phone you need to press the running on phone button first, even if you are going to create a new accont you need to press on the running on phone button** (it looks like nothing happend but believe us a lot have changed in the universe ;) ) </span>
+<span style="font-size:80px">- **Becuse you are running on your phone you need to press the running on phone button first, even if you are going to create a new accont you need to press on the running on phone button** (it looks like nothing happend but believe us a lot have changed in the universe ;) ) </span>
 - Enter your **email** and **password**.
 - If you don’t have an account yet, click **Create account** to register first.
 - Click **Next** to continue and sign in.
@@ -193,6 +193,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
