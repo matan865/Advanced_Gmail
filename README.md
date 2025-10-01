@@ -5,8 +5,8 @@ My Gmail is a gmail application created by Matan Badichi, Yakir Sharabi, and Roi
 ---
 ## Features
 
-- **User Registration**: Create an account by providing your username, profile image, and password.  
-  **Note**: Each username is unique, ensuring a distinct identity for every user.
+- **User Registration**: Create an account by providing your username, and password.  
+  **Note**: Each username is unique, ensuring a distinct identity for every user so if you enter with an exsiting username the application will login to the existing user.
 
 - **User Authentication**: Log in to the application using your registered credentials.
 
@@ -184,4 +184,5 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
