@@ -60,8 +60,7 @@ You are now all set to run Advanced Gmail and start managing your emails with th
 
 Clone the project repository to your local machine.
 Open the terminal or command prompt and navigate to the server's directory.
-for example: enter the folder path in the navigation bar and type "wsl" and after that enter "code ." and than in the terminal type  
-Follow the steps below to run the application:
+for example: enter the folder path in the navigation bar and type "wsl" and after that enter "code ." and than follow the steps below to run the application:
 
 1. **Start MongoDB**: (if you didnt already) 
    To run MongoDB, use the following Docker command:
@@ -73,6 +72,8 @@ If you have already run the above command previously, you can start MongoDB with
 ```bash
 docker start mongo
 ```
+we expet to get "mongo" in the terminal.
+
 
 3. Install required dependencies:  dotenv, mongoose, express
 ```bash
@@ -185,6 +186,7 @@ These buttons provide quick access to different sections of the email system, ma
 * Roy Meiri (Scrum Master)
 * Matan Badichi
 * Yakir Sharabi
+
 
 
 
