@@ -12,7 +12,7 @@
 
         <EditText
             android:id="@+id/etTo"
-            android:hint="To (username or email)"
+            android:hint="To (username)"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
