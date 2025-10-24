@@ -167,12 +167,6 @@ All changes are persisted and reflected in label counters.
 
 ---
 
-## 👤 Authors
-
-* Roy Meiri (Scrum Master)
-* Matan Badichi
-* Yakir Sharabi
-
 > Dev login page: `http://localhost:3001/login`
 > Dev building + running 
 ```bash
