@@ -189,11 +189,8 @@ These buttons provide quick access to different sections of the email system, ma
 - A confirmation appears once the email is sent successfully.
 
 
-## 👤 Authors
 
-* Roy Meiri (Scrum Master)
-* Matan Badichi
-* Yakir Sharabi
+
 
 
 
