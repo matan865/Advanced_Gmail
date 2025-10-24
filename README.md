@@ -1,6 +1,7 @@
 # Advanced Gmail
 
-In this project, we create a Gmail-like website and email simulation system to learn various tools taught in the *Advanced Systems Programming* course.
+In this project, we create a Gmail-like website and email simulation system to learn various tools taught in the *Advanced Systems Programming* course.  
+There are two branches in this repository, in this branch (webgmail) the gmail is a web application, in order to see the android application you need to change the branch into androidgmail branch.
 
 ---
 
